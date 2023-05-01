@@ -12,20 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+
 import com.ssafy.board.model.dto.BoardDto;
 import com.ssafy.board.model.service.BoardService;
 import com.ssafy.board.model.service.BoardServiceImp;
 
-@WebServlet("/board")
-public class BoardController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller("/board")
+public class BoardController {
 
-	BoardService boardService;
+	private BoardService boardService;
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		boardService = BoardServiceImp.getInstance();
+	public BoardController(BoardService boardService) {
+		this.boardService = boardService;
 	}
 	
 	private void forward(HttpServletRequest request, HttpServletResponse response, String path)
