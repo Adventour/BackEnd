@@ -38,8 +38,8 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(2, memberDto.getUserName());
 			pstmt.setString(3, memberDto.getUserPwd());
 			pstmt.setString(4, memberDto.getUserEmail());
-			pstmt.setInt(5, memberDto.getUserSido());
-			pstmt.setInt(6, memberDto.getUserGugun());
+//			pstmt.setInt(5, memberDto.getUserSido());
+//			pstmt.setInt(6, memberDto.getUserGugun());
 			pstmt.setString(7, memberDto.getSalt());
 			pstmt.executeUpdate();
 
@@ -66,7 +66,7 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(2, memberDto.getUserPwd());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				returnMemberDto = new MemberDto();
+//				returnMemberDto = new MemberDto();
 				returnMemberDto.setUserId(rs.getString("user_id"));
 				returnMemberDto.setUserName(rs.getString("user_name"));	
 			}

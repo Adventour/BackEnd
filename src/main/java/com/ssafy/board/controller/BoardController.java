@@ -18,7 +18,7 @@ import com.ssafy.board.model.dto.BoardDto;
 import com.ssafy.board.model.service.BoardService;
 import com.ssafy.board.model.service.BoardServiceImp;
 
-@Controller("/board")
+//@Controller("/board")
 public class BoardController {
 
 	private BoardService boardService;

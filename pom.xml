@@ -16,6 +16,8 @@
 	<properties>
 		<java.version>1.8</java.version>
         <commons-fileupload-version>1.5</commons-fileupload-version>
+       		<jackson-databind-version>2.13.5</jackson-databind-version>
+		<json-version>20230227</json-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -77,6 +79,20 @@
             <artifactId>commons-fileupload</artifactId>
             <version>${commons-fileupload-version}</version>
         </dependency>
+        
+        		<!-- JSON -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>${json-version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

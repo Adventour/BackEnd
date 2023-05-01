@@ -20,7 +20,7 @@ import com.ssafy.attraction.model.service.AttractionService;
 import com.ssafy.attraction.model.service.AttractionServiceImpl;
 
 
-@Controller("/attraction")
+//@Controller("/attraction")
 public class AttractionController {
 	private AttractionService attractionService;
 
