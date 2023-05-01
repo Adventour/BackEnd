@@ -24,19 +24,44 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/member")
-@CrossOrigin("**")
+@CrossOrigin("*")
 public class MemberController {
-//	private MemberService memberService;
+	private MemberService memberService;
 	
-//	public MemberController(MemberService memberService) {
-//		this.memberService = memberService;
-//	}
+	public MemberController(MemberService memberService) {
+		this.memberService = memberService;
+	}
 
 	@PostMapping("/register")
 	public ResponseEntity<?> regist(@RequestBody MemberDto memberDto) throws Exception {
-//		memberService.registerMember(memberDto);
-//		System.out.println(memberDto);
+		memberService.registerMember(memberDto);
 		return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody MemberDto memberDto, HttpSession session) throws Exception {
+		MemberDto loginMember = memberService.loginMember(memberDto);
+		session.setAttribute("userinfo", loginMember);
+		return new ResponseEntity<MemberDto>(loginMember, HttpStatus.OK);
+	}
+	
+	@GetMapping("/logout")
+	public ResponseEntity<?> logout(HttpSession session) throws Exception {
+		session.invalidate();
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/modify")
+	// TODO 앞의 인자들 DTO로 변경하던지 할 것
+	public ResponseEntity<?> modify(String mid, String mname, String mpwd,HttpSession session) throws Exception {
+		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
+		memberDto.setUserId(mid);
+		memberDto.setUserName(mname);
+		memberDto.setUserPwd(mpwd);
+		memberService.modifyMember(memberDto);
+		session.setAttribute("userinfo", memberDto);
+		
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	
