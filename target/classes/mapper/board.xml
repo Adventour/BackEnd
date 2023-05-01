@@ -1,4 +1,4 @@
-<!-- <?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -7,30 +7,49 @@
 	<resultMap type="boardDto" id="article">
 		<result column="article_no" property="articleNo"/>
 		<result column="user_id" property="userId"/>
-		<result column="user_name" property="userName"/>
 		<result column="subject" property="subject"/>
 		<result column="content" property="content"/>
 		<result column="hit" property="hit"/>
 		<result column="register_time" property="registerTime"/>
 	</resultMap>
-	
-	<resultMap type="boardDto" id="viewArticle" extends="article">
-		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
-	</resultMap>
-	
-	<resultMap type="fileInfoDto" id="file">
-		<result column="save_folder" property="saveFolder"/>
-		<result column="original_file" property="originalFile"/>
-		<result column="save_file" property="saveFile"/>
-	</resultMap>
 
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (user_id, subject, content, hit, register_time)
-		values (#{userId}, #{subject}, #{content}, 0, now())
-		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
-			select last_insert_id()
-		</selectKey>
+		insert into board (user_id, subject, content)
+		values (#{userId}, #{subject}, #{content})
 	</insert>
+	
+	<select id="listArticle" resultMap="article">
+		select * from board
+	</select>
+	
+	<select id="getArticle" parameterType="int" resultMap="article">
+		select * from board
+		where article_no = #{articleNo}
+	</select>
+	
+	<update id="modifyArticle" parameterType="boardDto">
+		update board
+		set subject = #{subject}, content = #{content}
+		where article_no = #{articleNo}
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from board
+		where article_no = #{articleNo}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<insert id="registerFile" parameterType="boardDto">
 		insert into file_info (article_no, save_folder, original_file, save_file)
@@ -51,14 +70,7 @@
 		</if>
 	</sql>
 
-	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
-		from board b, members m 
-		where b.user_id = m.user_id
-		<include refid="search"></include>
-		order by b.article_no desc
-		limit #{start}, #{listsize}
-	</select>
+
 	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
@@ -103,4 +115,4 @@
 		where article_no = #{articleNo}
 	</delete>
 
-</mapper> -->
+</mapper>
