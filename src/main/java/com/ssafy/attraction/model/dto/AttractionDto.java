@@ -1,7 +1,7 @@
 package com.ssafy.attraction.model.dto;
 
 public class AttractionDto implements Comparable<AttractionDto>{
-	private int content_id; //얘가 pk라 얘로 찾으면 될듯
+	private int contentId; //얘가 pk라 얘로 찾으면 될듯
 	private int content_type_id;
 	private String title;
 	private String addr;
@@ -15,9 +15,9 @@ public class AttractionDto implements Comparable<AttractionDto>{
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getContent_id() { return content_id; }
+	public int getContent_id() { return contentId; }
 	
-	public void setContent_id(int content_id) { this.content_id = content_id; }
+	public void setContent_id(int content_id) { this.contentId = content_id; }
 	
 	public int getContent_type_id() { return content_type_id; }
 	

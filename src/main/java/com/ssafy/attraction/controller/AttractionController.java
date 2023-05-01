@@ -28,10 +28,10 @@ public class AttractionController {
 		this.attractionService = attractionService;
 	}
 
-	@GetMapping("/list")
-	public String list() {
-		return "list";
-	}
+//	@GetMapping("/list")
+//	public String list() {
+//		return "list";
+//	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

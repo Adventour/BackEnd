@@ -11,18 +11,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.member.model.service.MemberService;
 import com.ssafy.member.model.service.MemberServiceImpl;
 
-@WebServlet("/member")
-public class MemberController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller("member")
+public class MemberController {
 	private MemberService memberService;
 	
-	public void init() {
-		memberService = MemberServiceImpl.getMemberService();
+	public MemberController(MemberService memberService) {
+		this.memberService = memberService;
 	}
+
+	@GetMapping("/register")
+	public String regist(MemberDto memberDto) {
+		
+		return "register";
+	}
+	
+	private String register(HttpServletRequest request, HttpServletResponse response) {
+		MemberDto memberDto = new MemberDto();
+		memberDto.setUserId(request.getParameter("rid"));
+		memberDto.setUserName(request.getParameter("rname"));
+		memberDto.setUserEmail(request.getParameter("remail1")+request.getParameter("remail2"));
+		memberDto.setUserPwd(request.getParameter("rpwd"));
+		memberDto.setUserSido(Integer.valueOf(request.getParameter("rsido")));
+		memberDto.setUserGugun(Integer.valueOf(request.getParameter("rgugun")));
+		
+		try {
+			memberService.registerMember(memberDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/index.jsp";
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String path = "";
@@ -124,22 +150,6 @@ public class MemberController extends HttpServlet {
 		return 1;
 	}
 
-	private String register(HttpServletRequest request, HttpServletResponse response) {
-		MemberDto memberDto = new MemberDto();
-		memberDto.setUserId(request.getParameter("rid"));
-		memberDto.setUserName(request.getParameter("rname"));
-		memberDto.setUserEmail(request.getParameter("remail1")+request.getParameter("remail2"));
-		memberDto.setUserPwd(request.getParameter("rpwd"));
-		memberDto.setUserSido(Integer.valueOf(request.getParameter("rsido")));
-		memberDto.setUserGugun(Integer.valueOf(request.getParameter("rgugun")));
-		
-		try {
-			memberService.registerMember(memberDto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "/index.jsp";
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");

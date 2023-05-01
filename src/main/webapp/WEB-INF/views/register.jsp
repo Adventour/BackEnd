@@ -13,14 +13,13 @@
                   <div class="modal-body">
                     <div class="col-lg-8 col-md-10 col-sm-12">
                       <form id="form-register" method="POST" action="">
-                        <input type="hidden" name="action" value="register" />
                         <div class="mb-3">
                           <label for="name" class="form-label">이름 : </label>
                           <input
                             type="text"
                             class="form-control"
                             id="rname"
-                            name="rname"
+                            name="userName"
                             placeholder="이름..."
                           />
                         </div>
@@ -30,7 +29,7 @@
                             type="text"
                             class="form-control"
                             id="rid"
-                            name="rid"
+                            name="userId"
                             placeholder="아이디..."
                           />
                         </div>
@@ -41,7 +40,7 @@
                             type="password"
                             class="form-control"
                             id="rpwd"
-                            name="rpwd"
+                            name="userPwd"
                             placeholder="비밀번호..."
                           />
                         </div>
@@ -61,10 +60,10 @@
                             type="text"
                             class="form-control"
                             id="remail1"
-                            name="remail1"
+                            name="userEmail"
                             placeholder="이메일..."
                           />
-                          <select class="mb-3 span" name="remail2">
+                          <select class="mb-3 span" name="userDomain">
                             <option value="@ssafy.com" selected>싸피</option>
                             <option value="@naver.com" selected>네이버</option>
                             <option value="@gmail.com" selected>지메일</option>
@@ -134,11 +133,6 @@
           <script>
             document.getElementById("btn-register").addEventListener("click", function () {
            	  var id = document.querySelector("#rid").value;
-           	  console.log(document.querySelector("#rid").value);
-           	  console.log(document.querySelector("#rname").value);
-           	  console.log(document.querySelector("#rpwd").value);
-           	  console.log(document.querySelector("#remail1").value);
-           	  console.log(document.querySelector("#rsido").value);
               if (!document.querySelector("#rname").value) {
                 alert("이름 확인!!");
                 return;
@@ -157,7 +151,7 @@
                 alert("지역 확인!!");
               } else {
                 let form = document.getElementById("form-register");
-                form.setAttribute("action", "${root}/member");
+                form.setAttribute("action", "${root}/member/register");
                 form.submit();
               }
             })
