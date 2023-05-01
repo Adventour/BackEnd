@@ -3,11 +3,13 @@ package com.ssafy.board.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ssafy.board.model.dao.BoardDao;
 import com.ssafy.board.model.dao.BoardDaoImp;
 import com.ssafy.board.model.dto.BoardDto;
 
-
+@Service
 public class BoardServiceImp implements BoardService {
 	private static BoardService instance = new BoardServiceImp();
 	private BoardDao boardDao;

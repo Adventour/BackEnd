@@ -2,10 +2,13 @@ package com.ssafy.attraction.model.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ssafy.attraction.model.dao.AttractionDao;
 import com.ssafy.attraction.model.dao.AttractionDaoImpl;
 import com.ssafy.attraction.model.dto.AttractionDto;
 
+@Service
 public class AttractionServiceImpl implements AttractionService{
 	private static AttractionServiceImpl instance= new AttractionServiceImpl();
 	private AttractionDao attractionDao= AttractionDaoImpl.getInstance();

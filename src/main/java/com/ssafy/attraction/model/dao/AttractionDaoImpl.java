@@ -43,7 +43,7 @@ public class AttractionDaoImpl implements AttractionDao{
 				while(rs.next()) {
 					AttractionDto a= new AttractionDto();
 					a.setTitle(rs.getString("title"));
-					a.setContent_type_id(rs.getInt("content_type_id"));
+					a.setContentTypeId(rs.getInt("content_type_id"));
 					a.setAddr(rs.getString("addr"));
 					a.setImage(rs.getString("image"));
 					a.setLatitude(rs.getDouble("latitude"));
@@ -70,7 +70,7 @@ public class AttractionDaoImpl implements AttractionDao{
 				while(rs.next()) {
 					AttractionDto a= new AttractionDto();
 					a.setTitle(rs.getString("title"));
-					a.setContent_type_id(rs.getInt("content_type_id"));
+					a.setContentTypeId(rs.getInt("content_type_id"));
 					a.setAddr(rs.getString("addr"));
 					a.setImage(rs.getString("image"));
 					a.setLatitude(rs.getDouble("latitude"));
