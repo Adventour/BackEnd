@@ -8,9 +8,10 @@ TODO : Follow Table ERD 변경 필요
 
 ---
 ## Swagger
+![](img/Swagger.png)
 
 
-
+---
 ### members
 | Attribute  | Explain               | Constraints |
 |------------|-----------------------|-------------|

@@ -14,21 +14,21 @@
 	</resultMap>
 
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (user_id, subject, content)
+		insert into boards (user_id, subject, content)
 		values (#{userId}, #{subject}, #{content})
 	</insert>
 	
 	<select id="listArticle" resultMap="article">
-		select * from board
+		select * from boards
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="article">
-		select * from board
+		select * from boards
 		where article_no = #{articleNo}
 	</select>
 	
 	<update id="modifyArticle" parameterType="boardDto">
-		update board
+		update boards
 		set subject = #{subject}, content = #{content}
 		where article_no = #{articleNo}
 	</update>
