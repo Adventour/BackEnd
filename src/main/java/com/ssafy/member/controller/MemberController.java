@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,7 +50,7 @@ public class MemberController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PostMapping("/modify")
+	@PutMapping("/modify")
 	@ApiOperation(value = "정보 수정", notes = "회원 정보 수정 요청 API 입니다.")
 	public ResponseEntity<?> modify(@RequestBody MemberDto modifyDto, HttpSession session) throws Exception {
 		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");

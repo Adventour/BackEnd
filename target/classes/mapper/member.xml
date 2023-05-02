@@ -25,7 +25,7 @@
 		where user_id = #{userId} and user_pwd = #{userPwd}
 	</select>
 	
-	<update id="updateMember" parameterType="memberDto">
+	<update id="modifyMember" parameterType="memberDto">
 		update members
 		<trim prefix="set" suffixOverrides=",">
 			<if test="userName != null">user_name = #{userName},</if>

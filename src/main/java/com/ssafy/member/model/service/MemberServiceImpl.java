@@ -44,6 +44,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void modifyMember(MemberDto memberDto) throws Exception {
 
+		// TODO salt로 암호화 하는 과정 추가
 		MemberMapper.modifyMember(memberDto);
 		
 	}

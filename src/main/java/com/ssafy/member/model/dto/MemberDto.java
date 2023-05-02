@@ -17,8 +17,8 @@ public class MemberDto {
 	private String userPwd;
 	private String userEmail;
 	private String userDomain;
-//	private int userSido=3;
-//	private int userGugun=3;
+	private int userSido;
+	private int userGugun;
 	private String salt;
 
 }
