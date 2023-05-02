@@ -29,20 +29,22 @@ public class BoardController {
 	
 	@GetMapping("/")
 	public ResponseEntity<?> list() throws Exception {
-		List<BoardDto> boardList = boardService.list();
+		List<BoardDto> boardList = boardService.listArticle();
 		return new ResponseEntity<List<BoardDto>>(boardList, HttpStatus.OK);
 	}
 	
 	@PostMapping("/write")
 	public ResponseEntity<?> write(@RequestBody BoardDto boardDto, HttpSession session) throws Exception {
-		String id = (String) session.getAttribute("loginUser");
-		boardService.write(id, boardDto.getSubject(), boardDto.getContent());
+//		String id = (String) session.getAttribute("loginUser");
+		boardService.writeArticle(boardDto);
+//		boardService.write(id, boardDto.getSubject(), boardDto.getContent());
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@GetMapping("list/{articleNo}")
 	public ResponseEntity<?> view(@PathVariable("articleNo") String articleNo) throws Exception {
-		BoardDto boardDto = boardService.view(Integer.valueOf(articleNo));
+		BoardDto boardDto = boardService.getArticle(Integer.valueOf(articleNo));
+//		BoardDto boardDto = boardService.view(Integer.valueOf(articleNo));
 		return new ResponseEntity<BoardDto>(boardDto, HttpStatus.OK);
 	}
 	
@@ -50,8 +52,8 @@ public class BoardController {
 	public ResponseEntity<?> modify(@PathVariable("articleNo") @RequestBody BoardDto boardDto) throws Exception {
 		
 		// TODO 추후에 modify BoardDto 이용으로 변경
-		boardService.modify(boardDto.getArticleNo(), boardDto.getSubject(), boardDto.getContent());
-		
+		boardService.modifyArticle(boardDto);
+//		boardService.modify(boardDto.getArticleNo(), boardDto.getSubject(), boardDto.getContent());
 		// TODO 바뀐 데이터 보내줘야 함
 		return new ResponseEntity<Void>(HttpStatus.OK); 
 	}
@@ -59,7 +61,8 @@ public class BoardController {
 	@DeleteMapping("/list/{articleNo}")
 	public ResponseEntity<?> delete(@PathVariable("articleNo") String articleNo) throws Exception {
 		// TODO 추후에 자격 검증 필요
-		boardService.delete(Integer.valueOf(articleNo));
+		boardService.deleteArticle(Integer.valueOf(articleNo));
+//		boardService.delete(Integer.valueOf(articleNo));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

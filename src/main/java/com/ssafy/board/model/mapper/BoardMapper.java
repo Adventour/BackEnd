@@ -3,8 +3,11 @@ package com.ssafy.board.model.mapper;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ssafy.board.model.dto.BoardDto;
 
+@Mapper
 public interface BoardMapper {
 
 	void writeArticle(BoardDto boardDto) throws SQLException;
