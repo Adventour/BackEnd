@@ -1,39 +1,37 @@
-package com.ssafy.attraction.controller;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ssafy.attraction.model.dto.AttractionDto;
-import com.ssafy.attraction.model.service.AttractionService;
-import com.ssafy.attraction.model.service.AttractionServiceImpl;
-
-import io.swagger.annotations.Api;
-
-
-@RestController
-@RequestMapping("/attraction")
-@Api(tags = "관광지")
-public class AttractionController {
-	
-	
-	@GetMapping("/temp")
-	public void temp() {
-	}
+//package com.ssafy.attraction.controller;
+//
+//import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import javax.servlet.DispatcherType;
+//import javax.servlet.RequestDispatcher;
+//import javax.servlet.ServletException;
+//import javax.servlet.annotation.WebServlet;
+//import javax.servlet.http.HttpServlet;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import com.ssafy.attraction.model.dto.AttractionDto;
+//import com.ssafy.attraction.model.service.AttractionService;
+//import com.ssafy.attraction.model.service.AttractionServiceImpl;
+//
+//import io.swagger.annotations.Api;
+//
+//
+//@RestController
+//@RequestMapping("/attraction")
+//@Api(tags = "관광지")
+//public class AttractionController {
+//	
 //	private AttractionService attractionService;
+//	
+	
 //
 //	public AttractionController(AttractionService attractionService) {
 //		this.attractionService = attractionService;
@@ -80,4 +78,4 @@ public class AttractionController {
 //		doGet(request, response);
 //	}
 
-}
+//}

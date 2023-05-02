@@ -78,4 +78,10 @@ public class BoardController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
+//	@PostMapping("/list/{articleNo}/replies")
+//	
+//	@PutMapping("/list/{articleNo}/replies")
+//	
+//	@DeleteMapping("/list/{articleNo}/replies")
+	
 }
