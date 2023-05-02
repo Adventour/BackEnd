@@ -16,16 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.reply.model.dto.ReplyDto;
 import com.ssafy.reply.model.service.ReplyService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/board")
+@Api(tags = "댓글")
 public class ReplyController {
 	private ReplyService replyService;
-
+	
 	public ReplyController(ReplyService replyService) {
 		this.replyService = replyService;
 	}
 
 	@PostMapping("/list/{articleNo}/replies")
+	@ApiOperation(value = "댓글 작성", notes = "댓글 작성 요청 API 입니다.")
 	public ResponseEntity<?> writeReply(@PathVariable String articleNo, @RequestBody ReplyDto replyDto)
 			throws Exception {
 		replyDto.setArticleNo(Integer.valueOf(articleNo));
@@ -34,18 +39,21 @@ public class ReplyController {
 	}
 
 	@GetMapping("/list/{articleNo}/replies")
+	@ApiOperation(value = "댓글 리스트 보기", notes = "모든 댓글 요청 API 입니다.")
 	public ResponseEntity<?> listReply(@PathVariable String articleNo) throws Exception {
 		List<ReplyDto> list = replyService.listReply(Integer.valueOf(articleNo));
 		return new ResponseEntity<List<ReplyDto>>(list, HttpStatus.OK);
 	}
 
 	@PutMapping("/list/{articleNo}/replies")
+	@ApiOperation(value = "댓글 수정", notes = "댓글 수정 요청 API 입니다.")
 	public ResponseEntity<?> modifyReply(@RequestBody ReplyDto replyDto) throws Exception {
 		replyService.modifyReply(replyDto);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/list/{articleNo}/replies")
+	@ApiOperation(value = "댓글 삭제", notes = "댓글 삭제 요청 API 입니다.")
 	public ResponseEntity<?> deleteReply(@RequestBody ReplyDto replyDto) throws Exception {
 		replyService.deleteReply(replyDto);
 		return new ResponseEntity<Void>(HttpStatus.OK);
