@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.hotplace.model.mapper.HotPlaceMapper">
+
+	<resultMap type="hotPlaceDto" id="hotPlace">
+		<result column="hot_place_id" property="hotPlaceId"/>
+		<result column="user_id" property="userId"/>
+		<result column="hot_place_name" property="hotPlaceName"/>
+		<result column="hot_place_addr" property="hotPlaceAddr"/>
+		<result column="hot_place_image" property="hotPlaceImage"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="descript" property="descript"/>
+	</resultMap>
+
+
+	<insert id="addHotPlace" parameterType="hotPlaceDto">
+		insert into hot_places (user_id, hot_place_name, hot_place_addr, hot_place_image, latitude, longitude, descript)
+		values (#{userId}, #{hotPlaceName}, #{hotPlaceAddr}, #{hotPlaceImage}, #{latitude}, #{longitude}, #{descript})
+	</insert>
+
+</mapper>
