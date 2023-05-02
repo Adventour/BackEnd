@@ -14,10 +14,10 @@ import com.ssafy.member.model.service.MemberServiceImpl;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-	private MemberMapper MemberMapper;
-	
+	private MemberMapper memberMapper;
+
 	public MemberServiceImpl(MemberMapper memberMapper) {
-		MemberMapper = memberMapper;
+		this.memberMapper = memberMapper;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		pwd = encrypt(pwd + salt);
 		memberDto.setSalt(salt);
 		memberDto.setUserPwd(pwd);
-		MemberMapper.registerMember(memberDto);
+		memberMapper.registerMember(memberDto);
 		return 0;
 	}
 	
@@ -38,19 +38,19 @@ public class MemberServiceImpl implements MemberService {
 		String salt = pwd + getUserSalt(memberDto);
 		pwd = encrypt(salt);
 		memberDto.setUserPwd(pwd);
-		return MemberMapper.loginMember(memberDto);
+		return memberMapper.loginMember(memberDto);
 	}
 	
 	@Override
 	public void modifyMember(MemberDto memberDto) throws Exception {
 
 		// TODO salt로 암호화 하는 과정 추가
-		MemberMapper.modifyMember(memberDto);
+		memberMapper.modifyMember(memberDto);
 		
 	}
 	
 	public String getUserSalt(MemberDto memberDto) throws Exception {
-		return MemberMapper.getUserSalt(memberDto);
+		return memberMapper.getUserSalt(memberDto);
 
 	}
 	
@@ -81,5 +81,15 @@ public class MemberServiceImpl implements MemberService {
 			// TODO: handle exception
 		}
 		return encryptedPwd;
+	}
+
+	@Override
+	public void followMember(String followerId, String followingId) throws Exception {
+		memberMapper.followMember(followerId, followingId);
+	}
+
+	@Override
+	public void unFollowMember(String followerId, String followingId) throws Exception {
+		memberMapper.unFollowMember(followerId, followingId);
 	}
 }

@@ -7,10 +7,9 @@ import com.ssafy.member.model.dto.MemberDto;
 @Mapper
 public interface MemberMapper {
 	int registerMember(MemberDto memberDto) throws Exception;
-
 	MemberDto loginMember(MemberDto memberDto) throws Exception;
-
 	void modifyMember(MemberDto memberDto) throws Exception;
-
 	String getUserSalt(MemberDto memberDto) throws Exception;
+	void followMember(String followerId, String followingId) throws Exception;
+	void unFollowMember(String followerId, String followingId) throws Exception;
 }

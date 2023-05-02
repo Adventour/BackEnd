@@ -2,6 +2,7 @@
 
 ---
 ## DB ERD
+TODO : Follow Table ERD 변경 필요
 ![](img/DB_ERD.png)
 
 
@@ -39,9 +40,9 @@
 ### followings
 | Attribute      | Explain    | Constraints |
 |----------------|------------|-------------|
-| following_id   | 팔로잉 고유 식별자 | PK          |
-| user_id        | 팔로잉 유저 식별자 | FK, UK      |
-| follower_id    | 팔로워 유저 식별자 | FK, UK      |
+| follow_id      | 팔로잉 고유 식별자 | PK          |
+| follower_id    | 팔로잉 유저 식별자 | FK, UK      |
+| following_id   | 팔로워 유저 식별자 | FK, UK      |
 | following_time | 팔로잉 시작 시각  |             |
 
 
