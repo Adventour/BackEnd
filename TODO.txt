@@ -1,0 +1,2 @@
+1. Modify 등 DTO 받아서 Front에 넘겨줄 수 있게 처리
+2. 비밀번호 변경시 Encrypt해서 DB 전송

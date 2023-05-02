@@ -28,13 +28,12 @@
 	<update id="modifyMember" parameterType="memberDto">
 		update members
 		<trim prefix="set" suffixOverrides=",">
-			<if test="userName != null">user_name = #{userName},</if>
-			<if test="userPwd != null">user_pwd = #{userPwd},</if>
-			<if test="userEmail != null">user_email = #{userEmail},</if>
-			<if test="userDomain != null">email_domain = #{userDomain},</if>
-			<if test="userSido != null">user_sido = #{userSido},</if>
-			<if test="userGugun != null">user_gugun = #{userGugun},</if>
-			<if test="salt != null">salt = #{salt},</if>
+			<if test="userName">user_name = #{userName},</if>
+			<if test="userPwd">user_pwd = #{userPwd},</if>
+			<if test="userEmail">user_email = #{userEmail},</if>
+			<if test="userDomain">email_domain = #{userDomain},</if>
+			<if test="userSido">user_sido = #{userSido},</if>
+			<if test="userGugun">user_gugun = #{userGugun},</if>
 		</trim>
 		where user_id = #{userId}
 	</update>

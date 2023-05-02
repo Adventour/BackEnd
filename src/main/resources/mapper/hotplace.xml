@@ -16,9 +16,35 @@
 	</resultMap>
 
 
+	<select id="listHotPlace" resultMap="hotPlace">
+		select * from hot_places
+	</select>
+
 	<insert id="addHotPlace" parameterType="hotPlaceDto">
 		insert into hot_places (user_id, hot_place_name, hot_place_addr, hot_place_image, latitude, longitude, descript)
 		values (#{userId}, #{hotPlaceName}, #{hotPlaceAddr}, #{hotPlaceImage}, #{latitude}, #{longitude}, #{descript})
 	</insert>
+
+	<delete id="deleteHotPlace" parameterType="hotPlaceDto">
+		delete from hot_places
+		where hot_place_id = #{hotPlaceId}
+	</delete>
+
+	<update id="modifyHotPlace" parameterType="hotPlaceDto">
+		update hot_places
+		<trim prefix="set" suffixOverrides=",">
+			<if test="hotPlaceName">hot_place_name = #{hotPlaceName},</if>
+			<if test="hotPlaceAddr">hot_place_addr = #{hotPlaceAddr},</if>
+			<if test="hotPlaceImage">hot_place_image = #{hotPlaceImage},</if>
+			<if test="latitude">latitude = #{latitude},</if>
+			<if test="longitude">longitude = #{longitude},</if>
+			<if test="descript">descript = #{descript}</if>
+		</trim>
+	</update>
+	
+	<select id="searchHotPlace" parameterType="hotPlaceDto" resultMap="hotPlace">
+		select * from hot_places
+		where hot_place_name like #{hotPlaceName}
+	</select>
 
 </mapper>

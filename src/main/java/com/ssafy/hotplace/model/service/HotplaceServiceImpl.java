@@ -1,5 +1,7 @@
 package com.ssafy.hotplace.model.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ssafy.hotplace.model.dto.HotPlaceDto;
@@ -17,6 +19,28 @@ public class HotplaceServiceImpl implements HotplaceService {
 	public void addHotPlace(HotPlaceDto hotPlaceDto) throws Exception {
 		hotPlaceMapper.addHotPlace(hotPlaceDto);
 		
+	}
+
+	@Override
+	public void deleteHotPlace(HotPlaceDto hotPlaceDto) {
+		hotPlaceMapper.deleteHotPlace(hotPlaceDto);
+		
+	}
+
+	@Override
+	public void modifyHotPlace(HotPlaceDto hotPlaceDto) {
+		hotPlaceMapper.modifyHotPlace(hotPlaceDto);
+	}
+
+	@Override
+	public List<HotPlaceDto> listHotPlace() {
+		return hotPlaceMapper.listHotPlace();
+	}
+
+	@Override
+	public List<HotPlaceDto> searchHotPlace(HotPlaceDto hotPlaceDto) {
+		hotPlaceDto.setHotPlaceName("%"+hotPlaceDto.getHotPlaceName()+"%");
+		return hotPlaceMapper.searchHotPlace(hotPlaceDto);
 	}
 	
 	
