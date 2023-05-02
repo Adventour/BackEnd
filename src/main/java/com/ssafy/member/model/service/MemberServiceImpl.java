@@ -83,13 +83,4 @@ public class MemberServiceImpl implements MemberService {
 		return encryptedPwd;
 	}
 
-	@Override
-	public void followMember(String followerId, String followingId) throws Exception {
-		memberMapper.followMember(followerId, followingId);
-	}
-
-	@Override
-	public void unFollowMember(String followerId, String followingId) throws Exception {
-		memberMapper.unFollowMember(followerId, followingId);
-	}
 }

@@ -7,6 +7,5 @@ public interface MemberService {
 	MemberDto loginMember(MemberDto memberDto) throws Exception;
 	void modifyMember(MemberDto memberDto) throws Exception;
 	public String getUserSalt(MemberDto memberDto) throws Exception;
-	void followMember(String followerId, String followingId) throws Exception;
-	void unFollowMember(String followerId, String followingId) throws Exception;
+
 }

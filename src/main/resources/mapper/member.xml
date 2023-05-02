@@ -44,14 +44,4 @@
 		where user_id = #{userId}
 	</select>
 	
-	<insert id="followMember" parameterType="string">
-		insert into followings (follower_id, following_id)
-		values (#{followerId}, #{followingId})
-	</insert>
-	
-	<delete id="unFollowMember" parameterType="string">
-		delete from followings
-		where follower_id = #{followerId} and following_id = #{followingId}
-	</delete>
-	
 </mapper>

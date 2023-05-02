@@ -64,27 +64,4 @@ public class MemberController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PostMapping("/follow")
-	@ApiOperation(value = "팔로우", notes = "팔로우 요청 API 입니다.")
-	public ResponseEntity<?> follow(@RequestBody String followingId, HttpSession session) throws Exception {
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		String followerId = memberDto.getUserId();
-		String followerId = "test";
-		System.out.println(followingId);
-		memberService.followMember(followerId, followingId);
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	
-	@DeleteMapping("/follow")
-	@ApiOperation(value = "언팔로우", notes = "언팔로우 요청 API 입니다.")
-	public ResponseEntity<?> unFollow(@RequestBody String followingId, HttpSession session) throws Exception{
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		String followerId = memberDto.getUserId();
-		String followerId = "test";
-		System.out.println(followingId);
-		memberService.unFollowMember(followerId, followingId);
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
 }
