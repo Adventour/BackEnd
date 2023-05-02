@@ -12,6 +12,7 @@ import com.ssafy.member.model.dao.MemberDaoImpl;
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.member.model.service.MemberService;
 import com.ssafy.member.model.service.MemberServiceImpl;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 	private static MemberService memberService = new MemberServiceImpl();

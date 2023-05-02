@@ -1,8 +1,14 @@
-# EnjoyTrip_서울_17_김민석_이효식
+# EnjoyTrip_서울_17_김민석_오성락
 
 ---
 ## DB ERD
 ![](img/DB_ERD.png)
+
+
+---
+## Swagger
+
+
 
 ### members
 | Attribute  | Explain               | Constraints |
