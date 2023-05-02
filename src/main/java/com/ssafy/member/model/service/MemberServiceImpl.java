@@ -7,32 +7,28 @@ import java.util.Base64;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.member.model.dao.MemberDao;
-import com.ssafy.member.model.dao.MemberDaoImpl;
 import com.ssafy.member.model.dto.MemberDto;
-import com.ssafy.member.model.service.MemberService;
+import com.ssafy.member.model.mapper.MemberMapper;
 import com.ssafy.member.model.service.MemberServiceImpl;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-	private static MemberService memberService = new MemberServiceImpl();
-	private MemberDao memberDao;
+
+	private MemberMapper MemberMapper;
 	
-	private MemberServiceImpl() {
-		memberDao = MemberDaoImpl.getMemberDao();
+	public MemberServiceImpl(MemberMapper memberMapper) {
+		MemberMapper = memberMapper;
 	}
-	
-	public static MemberService getMemberService() {
-		return memberService;
-	}
+
 	@Override
 	public int registerMember(MemberDto memberDto) throws Exception {
+		System.out.println("meow Minseok");
 		String pwd = memberDto.getUserPwd();
 		String salt = salt();
 		pwd = encrypt(pwd + salt);
 		memberDto.setSalt(salt);
 		memberDto.setUserPwd(pwd);
-		memberDao.registerMember(memberDto);
+		MemberMapper.registerMember(memberDto);
 		return 0;
 	}
 	
@@ -42,21 +38,22 @@ public class MemberServiceImpl implements MemberService {
 		String salt = pwd + getUserSalt(memberDto);
 		pwd = encrypt(salt);
 		memberDto.setUserPwd(pwd);
-		return memberDao.loginMember(memberDto);
+		return MemberMapper.loginMember(memberDto);
 	}
 	
 	@Override
 	public void modifyMember(MemberDto memberDto) throws Exception {
-		memberDao.modifyMember(memberDto);
+
+		MemberMapper.modifyMember(memberDto);
+		
 	}
 	
 	public String getUserSalt(MemberDto memberDto) throws Exception {
-		return memberDao.getUserSalt(memberDto);
+		return MemberMapper.getUserSalt(memberDto);
 
 	}
 	
 	public String salt() {
-		
 		String salt = "";
 		try {
 			SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
@@ -67,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return salt;
 	}
+	
 	public String encrypt(String salt) {
 		String encryptedPwd = "";
 		try {

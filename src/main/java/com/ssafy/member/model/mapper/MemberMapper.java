@@ -1,7 +1,10 @@
 package com.ssafy.member.model.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ssafy.member.model.dto.MemberDto;
 
+@Mapper
 public interface MemberMapper {
 	int registerMember(MemberDto memberDto) throws Exception;
 

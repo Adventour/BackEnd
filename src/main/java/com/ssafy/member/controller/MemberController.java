@@ -30,7 +30,7 @@ public class MemberController {
 	@PostMapping("/regist")
 	@ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
 	public ResponseEntity<?> regist(@RequestBody MemberDto memberDto) throws Exception {
-//		memberService.registerMember(memberDto);
+		memberService.registerMember(memberDto);
 		return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
 	}
 	
