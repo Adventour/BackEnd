@@ -19,7 +19,9 @@
 	
 	<select id="searchList" parameterType="attractionDto" resultMap="attraction">
 		select * from attraction
-		where sido_code = #{sidoCode} and gugun_code = #{gugunCode}
+		where sido_code = #{sidoCode}
+		<if test="gugunCode">and gugun_code = #{sidoCode}</if>
+		<if test="contentTypeId">and content_type_id = #{contentTypeId}</if>
 	</select>
 	
 </mapper>
