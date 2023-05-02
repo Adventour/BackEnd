@@ -34,9 +34,8 @@ public class BoardController {
 	@PostMapping("/write")
 	@ApiOperation(value = "게시글 작성", notes = "게시글 작성 요청 API 입니다.")
 	public ResponseEntity<?> write(@RequestBody BoardDto boardDto, HttpSession session) throws Exception {
-		String id = (String) session.getAttribute("loginUser");
-		boardDto.setUserId(id);
-		System.out.println(boardDto);
+//		String id = (String) session.getAttribute("loginUser");
+//		boardDto.setUserId(id);
 		boardService.writeArticle(boardDto);
 //		boardService.write(id, boardDto.getSubject(), boardDto.getContent());
 		return new ResponseEntity<Void>(HttpStatus.OK);
@@ -59,8 +58,8 @@ public class BoardController {
 
 	@PutMapping("/list/{articleNo}")
 	@ApiOperation(value = "게시글 수정", notes = "게시글 수정 요청 API 입니다.")
-	public ResponseEntity<?> modify(@PathVariable("articleNo") String articleNo, @RequestBody BoardDto boardDto) throws Exception {
-
+	public ResponseEntity<?> modify(@PathVariable("articleNo") String articleNo, @RequestBody BoardDto boardDto)
+			throws Exception {
 		// TODO 추후에 modify BoardDto 이용으로 변경
 		boardDto.setArticleNo(Integer.valueOf(articleNo));
 		boardService.modifyArticle(boardDto);
@@ -77,11 +76,4 @@ public class BoardController {
 //		boardService.delete(Integer.valueOf(articleNo));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
-//	@PostMapping("/list/{articleNo}/replies")
-//	
-//	@PutMapping("/list/{articleNo}/replies")
-//	
-//	@DeleteMapping("/list/{articleNo}/replies")
-	
 }

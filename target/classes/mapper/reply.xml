@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.reply.model.mapper.ReplyMapper">
+
+	<resultMap type="replyDto" id="reply">
+		<result column="reply_id" property="replyId"/>
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="content" property="content"/>
+		<result column="likes" property="likes"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
+	
+	<insert id="writeReply" parameterType="replyDto">
+		insert into replies (article_no, user_id, content)
+		values (#{articleNo}, #{userId}, #{content})
+	</insert>
+	
+	<select id="listReply" parameterType="int" resultMap="reply">
+		select * from replies
+		where article_no = #{articleNo}
+	</select>
+	
+	<update id="modifyReply" parameterType="replyDto">
+		update replies
+		set content = #{content}
+		where reply_id = #{replyId}
+	</update>
+	
+	<delete id="deleteReply" parameterType="replyDto">
+		delete from replies
+		where reply_id = #{replyId}
+	</delete>
+</mapper>
+
