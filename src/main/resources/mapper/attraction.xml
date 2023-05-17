@@ -23,5 +23,9 @@
 		<if test="gugunCode">and gugun_code = #{sidoCode}</if>
 		<if test="contentTypeId">and content_type_id = #{contentTypeId}</if>
 	</select>
+
+	<select id="getGugun" parameterType="int" resultMap="attraction">
+
+	</select>
 	
 </mapper>

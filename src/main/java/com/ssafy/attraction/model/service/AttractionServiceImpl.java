@@ -22,5 +22,10 @@ public class AttractionServiceImpl implements AttractionService{
 	public List<AttractionDto> searchList(AttractionDto attractionDto) {
 		return attractionMapper.searchList(attractionDto);
 	}
-	
+
+	@Override
+	public List<AttractionDto> getGugun(int sidoCode) {
+		return attractionMapper.getGugun(sidoCode);
+	}
+
 }

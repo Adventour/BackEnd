@@ -12,13 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
-	private String userId;
-	private String userName;
-	private String userPwd;
-	private String userEmail;
-	private String userDomain;
-	private int userSido;
-	private int userGugun;
-	private String salt;
+    private String userId;
+    private String userName;
+    private String userPwd;
+    private String userEmail;
+    private String userDomain;
+    private int userSido;
+    private int userGugun;
+    private String salt;
 
 }

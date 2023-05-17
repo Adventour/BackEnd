@@ -9,4 +9,6 @@ import com.ssafy.attraction.model.dto.AttractionDto;
 @Mapper
 public interface AttractionMapper {
 	public List<AttractionDto> searchList(AttractionDto attractionDto);
+
+    public List<AttractionDto> getGugun(int sidoCode);
 }

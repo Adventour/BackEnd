@@ -34,7 +34,7 @@
 	</update>
 	
 	<delete id="deleteArticle" parameterType="int">
-		delete from board
+		delete from boards
 		where article_no = #{articleNo}
 	</delete>
 
