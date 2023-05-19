@@ -1,6 +1,8 @@
 package com.ssafy.member.controller;
 
 import javax.servlet.http.HttpSession;
+
+import com.ssafy.auth.dto.TokenResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,16 +34,16 @@ public class MemberController {
 	@PostMapping("/regist")
 	@ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
 	public ResponseEntity<?> regist(@RequestBody MemberDto memberDto) throws Exception {
+		System.out.println(memberDto);
 		memberService.registerMember(memberDto);
 		return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
 	}
 	
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
-	public ResponseEntity<?> login(@RequestBody MemberDto memberDto, HttpSession session) throws Exception {
-		MemberDto loginMember = memberService.loginMember(memberDto);
-		session.setAttribute("userinfo", loginMember);
-		return new ResponseEntity<MemberDto>(loginMember, HttpStatus.OK);
+	public ResponseEntity<?> login(@RequestBody MemberDto memberDto) throws Exception {
+		TokenResponseDto tokenResponseDto = memberService.loginMember(memberDto);
+		return new ResponseEntity<TokenResponseDto>(tokenResponseDto, HttpStatus.OK);
 	}
 	
 	@GetMapping("/logout")
