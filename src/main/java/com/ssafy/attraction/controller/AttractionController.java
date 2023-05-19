@@ -29,6 +29,7 @@ public class AttractionController {
     @GetMapping("/search")
     @ApiOperation(value = "관광지 검색", notes = "관광지 검색 요청 API 입니다.")
     public ResponseEntity<?> search(@ModelAttribute AttractionDto attractionDto) {
+        System.out.println(attractionDto.getTitle());
         List<AttractionDto> list = new ArrayList<AttractionDto>();
         list = attractionService.searchList(attractionDto);
 

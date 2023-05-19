@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/reply")
 @Api(tags = "댓글")
 public class ReplyController {
 	private ReplyService replyService;
@@ -29,30 +29,30 @@ public class ReplyController {
 		this.replyService = replyService;
 	}
 
-	@PostMapping("/list/{articleNo}/replies")
+	@PostMapping("/list/{articleNo}")
 	@ApiOperation(value = "댓글 작성", notes = "댓글 작성 요청 API 입니다.")
-	public ResponseEntity<?> writeReply(@PathVariable String articleNo, @RequestBody ReplyDto replyDto)
+	public ResponseEntity<?> writeReply(@RequestBody ReplyDto replyDto)
 			throws Exception {
-		replyDto.setArticleNo(Integer.valueOf(articleNo));
+		System.out.println("유저아이디~~~~~~~~~~~~~~~~"+ replyDto.getUserId());
 		replyService.writeReply(replyDto);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("/list/{articleNo}/replies")
+	@GetMapping("/list/{articleNo}")
 	@ApiOperation(value = "댓글 리스트 보기", notes = "모든 댓글 요청 API 입니다.")
 	public ResponseEntity<?> listReply(@PathVariable String articleNo) throws Exception {
 		List<ReplyDto> list = replyService.listReply(Integer.valueOf(articleNo));
 		return new ResponseEntity<List<ReplyDto>>(list, HttpStatus.OK);
 	}
 
-	@PutMapping("/list/{articleNo}/replies")
+	@PutMapping("/list/{articleNo}")
 	@ApiOperation(value = "댓글 수정", notes = "댓글 수정 요청 API 입니다.")
 	public ResponseEntity<?> modifyReply(@RequestBody ReplyDto replyDto) throws Exception {
 		replyService.modifyReply(replyDto);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/list/{articleNo}/replies")
+	@DeleteMapping("/list/{articleNo}")
 	@ApiOperation(value = "댓글 삭제", notes = "댓글 삭제 요청 API 입니다.")
 	public ResponseEntity<?> deleteReply(@RequestBody ReplyDto replyDto) throws Exception {
 		replyService.deleteReply(replyDto);
