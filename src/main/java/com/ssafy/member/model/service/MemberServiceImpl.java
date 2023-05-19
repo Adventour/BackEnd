@@ -50,8 +50,11 @@ public class MemberServiceImpl implements MemberService {
 		String salt = pwd + getUserSalt(memberDto);
 		pwd = encrypt(salt);
 		memberDto.setUserPwd(pwd);
-		memberMapper.loginMember(memberDto);
-
+		MemberDto loginMember = memberMapper.loginMember(memberDto);
+		if (loginMember == null) {
+			log.debug("로그인에서 문제 발생");
+			throw new Exception();
+		}
 		JwtDto jwtDto = new JwtDto();
 		jwtDto.setUserId(memberDto.getUserId());
 //		JwtDto jwtDto = new JwtDto().builder()

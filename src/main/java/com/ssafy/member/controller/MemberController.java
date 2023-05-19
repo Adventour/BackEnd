@@ -35,14 +35,23 @@ public class MemberController {
 	@ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
 	public ResponseEntity<?> regist(@RequestBody MemberDto memberDto) throws Exception {
 		System.out.println(memberDto);
-		memberService.registerMember(memberDto);
-		return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		try {
+			memberService.registerMember(memberDto);
+		} catch (Exception e) {
+			return new ResponseEntity<>(memberDto, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(memberDto, HttpStatus.OK);
 	}
 	
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
 	public ResponseEntity<?> login(@RequestBody MemberDto memberDto) throws Exception {
-		TokenResponseDto tokenResponseDto = memberService.loginMember(memberDto);
+		TokenResponseDto tokenResponseDto = null;
+		try {
+			tokenResponseDto = memberService.loginMember(memberDto);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.valueOf("로그인 실패"));
+		}
 		return new ResponseEntity<TokenResponseDto>(tokenResponseDto, HttpStatus.OK);
 	}
 	
