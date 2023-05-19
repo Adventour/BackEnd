@@ -2,6 +2,7 @@ package com.ssafy.attraction.model.mapper;
 
 import java.util.List;
 
+import com.ssafy.attraction.model.dto.GugunDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.attraction.model.dto.AttractionDto;
@@ -10,5 +11,7 @@ import com.ssafy.attraction.model.dto.AttractionDto;
 public interface AttractionMapper {
 	public List<AttractionDto> searchList(AttractionDto attractionDto);
 
-    public List<AttractionDto> getGugun(int sidoCode);
+    public List<GugunDto> getGugun(int sidoCode);
+
+    String getOverview(String contentId);
 }

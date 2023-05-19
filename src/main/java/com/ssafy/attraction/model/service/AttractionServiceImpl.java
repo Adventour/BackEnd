@@ -2,6 +2,7 @@ package com.ssafy.attraction.model.service;
 
 import java.util.List;
 
+import com.ssafy.attraction.model.dto.GugunDto;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.attraction.model.dao.AttractionDao;
@@ -24,8 +25,13 @@ public class AttractionServiceImpl implements AttractionService{
 	}
 
 	@Override
-	public List<AttractionDto> getGugun(int sidoCode) {
+	public List<GugunDto> getGugun(int sidoCode) {
 		return attractionMapper.getGugun(sidoCode);
+	}
+
+	@Override
+	public String getOverview(String contentId) {
+		return attractionMapper.getOverview(contentId);
 	}
 
 }

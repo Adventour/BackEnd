@@ -16,12 +16,26 @@
 		<result column="longitude" property="longitude"/>
 		<result column="distance" property="distance"/>
 	</resultMap>
-	
+
+	<resultMap type="GugunDto" id="gugun">
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="gugun_name" property="name"/>
+	</resultMap>
+
 	<select id="searchList" parameterType="attractionDto" resultMap="attraction">
 		select * from attraction
 		where sido_code = #{sidoCode}
 		<if test="gugunCode">and gugun_code = #{sidoCode}</if>
 		<if test="contentTypeId">and content_type_id = #{contentTypeId}</if>
 	</select>
-	
+
+	<select id="getGugun" parameterType="int" resultMap="gugun">
+		select gugun_code, gugun_name from gugun
+		where sido_code = #{sidoCode}
+	</select>
+
+	<select id="getOverview" parameterType="string" resultType="string">
+		select overview from attraction_description
+		where content_id = #{contentId};
+	</select>
 </mapper>
