@@ -5,40 +5,65 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+import com.ssafy.auth.dto.TokenResponseDto;
+import com.ssafy.auth.jwt.JwtDto;
+import com.ssafy.auth.jwt.JwtProvider;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.member.model.mapper.MemberMapper;
-import com.ssafy.member.model.service.MemberServiceImpl;
 
+@Slf4j
 @Service
+@AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
 	private MemberMapper memberMapper;
+	private JwtProvider jwtProvider;
 
-	public MemberServiceImpl(MemberMapper memberMapper) {
-		this.memberMapper = memberMapper;
-	}
+//	public MemberServiceImpl(MemberMapper memberMapper) {
+//		this.memberMapper = memberMapper;
+//	}
 
 	@Override
 	public int registerMember(MemberDto memberDto) throws Exception {
-		System.out.println("meow Minseok");
 		String pwd = memberDto.getUserPwd();
 		String salt = salt();
 		pwd = encrypt(pwd + salt);
 		memberDto.setSalt(salt);
 		memberDto.setUserPwd(pwd);
+
+		System.out.println(memberDto);
+		// TODO 중복 아이디 경우 처리 필요
 		memberMapper.registerMember(memberDto);
+
 		return 0;
 	}
 	
 	@Override
-	public MemberDto loginMember(MemberDto memberDto) throws Exception {
+	public TokenResponseDto loginMember(MemberDto memberDto) throws Exception {
 		String pwd = memberDto.getUserPwd();
 		String salt = pwd + getUserSalt(memberDto);
 		pwd = encrypt(salt);
 		memberDto.setUserPwd(pwd);
-		return memberMapper.loginMember(memberDto);
+		MemberDto loginMember = memberMapper.loginMember(memberDto);
+		if (loginMember == null) {
+			log.debug("로그인에서 문제 발생");
+			throw new Exception();
+		}
+		JwtDto jwtDto = new JwtDto();
+		jwtDto.setUserId(memberDto.getUserId());
+//		JwtDto jwtDto = new JwtDto().builder()
+//				.userId(memberDto.getUserId())
+//				.build();
+
+		TokenResponseDto tokenResponseDto = jwtProvider.generateToken(jwtDto);
+		System.out.println(tokenResponseDto);
+		return tokenResponseDto;
 	}
 	
 	@Override
