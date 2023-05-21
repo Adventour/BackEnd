@@ -6,10 +6,7 @@ import com.ssafy.auth.dto.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,12 +41,11 @@ public class MemberController {
 		return new ResponseEntity<>(memberDto, HttpStatus.OK);
 	}
 
-//	@GetMapping("/test")
-//	public ResponseEntity<?> test(Authentication authentication) {
-////		authentication.getName();
-//		System.out.println("!!!!!"+authentication.getName());
-//		return new ResponseEntity<>(authentication.getName(), HttpStatus.OK);
-//	}
+	@GetMapping("/test")
+	public ResponseEntity<?> test(Authentication authentication) {
+		System.out.println("!!!!!"+authentication.getName());
+		return new ResponseEntity<>(authentication, HttpStatus.OK);
+	}
 
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
@@ -75,7 +71,7 @@ public class MemberController {
 	public ResponseEntity<?> modify(@RequestBody MemberDto modifyDto, HttpSession session) throws Exception {
 		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
 		memberDto.setUserId(modifyDto.getUserId());
-		memberDto.setUserName(modifyDto.getUserName());
+		memberDto.setUserNameN(modifyDto.getUserNameN());
 		memberDto.setUserPwd(modifyDto.getUserPwd());
 		memberService.modifyMember(memberDto);
 		session.setAttribute("userinfo", memberDto);

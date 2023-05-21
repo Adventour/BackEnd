@@ -10,4 +10,6 @@ public interface MemberMapper {
 	MemberDto loginMember(MemberDto memberDto) throws Exception;
 	void modifyMember(MemberDto memberDto) throws Exception;
 	String getUserSalt(MemberDto memberDto) throws Exception;
+
+	MemberDto findByUserId(String userId) throws Exception;
 }

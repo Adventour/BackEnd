@@ -6,7 +6,7 @@
 
 	<resultMap type="memberDto" id="member">
 		<result column="user_id" property="userId"/>
-		<result column="user_name" property="userName"/>
+		<result column="user_name" property="userNameN"/>
 		<result column="user_pwd" property="userPwd"/>
 		<result column="user_email" property="userEmail"/>
 		<result column="user_domain" property="userDomain"/>
@@ -17,7 +17,7 @@
 
 	<insert id="registerMember" parameterType="memberDto">
 		insert into members (user_id, user_name, user_pwd, user_email, user_sido, user_gugun, salt)
-		values (#{userId}, #{userName}, #{userPwd}, #{userEmail}, #{userSido}, #{userGugun}, #{salt})
+		values (#{userId}, #{userNameN}, #{userPwd}, #{userEmail}, #{userSido}, #{userGugun}, #{salt})
 	</insert>
 
 	<select id="loginMember" parameterType="memberDto" resultMap="member">
@@ -28,7 +28,7 @@
 	<update id="modifyMember" parameterType="memberDto">
 		update members
 		<trim prefix="set" suffixOverrides=",">
-			<if test="userName">user_name = #{userName},</if>
+			<if test="userName">user_name = #{userNameN},</if>
 			<if test="userPwd">user_pwd = #{userPwd},</if>
 			<if test="userEmail">user_email = #{userEmail},</if>
 			<if test="userDomain">email_domain = #{userDomain},</if>
@@ -40,6 +40,11 @@
 
 	<select id="getUserSalt" parameterType="memberDto" resultType="string">
 		select salt from members
+		where user_id = #{userId}
+	</select>
+
+	<select id="findByUserId" parameterType="string" resultMap="member">
+		select * from members
 		where user_id = #{userId}
 	</select>
 	

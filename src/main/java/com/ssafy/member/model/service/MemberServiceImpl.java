@@ -8,8 +8,13 @@ import java.util.Base64;
 import com.ssafy.auth.dto.TokenResponseDto;
 import com.ssafy.auth.jwt.JwtDto;
 import com.ssafy.auth.jwt.JwtProvider;
+import com.ssafy.member.model.MemberRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.member.model.dto.MemberDto;
@@ -20,16 +25,21 @@ import com.ssafy.member.model.mapper.MemberMapper;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
+	private final PasswordEncoder passwordEncoder;
 	private final MemberMapper memberMapper;
 	private final JwtProvider jwtProvider;
+	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 	@Override
 	public int registerMember(MemberDto memberDto) throws Exception {
 		String pwd = memberDto.getUserPwd();
-		String salt = salt();
-		pwd = encrypt(pwd + salt);
-		memberDto.setSalt(salt);
-		memberDto.setUserPwd(pwd);
+//		String salt = salt();
+//		pwd = encrypt(pwd + salt);
+//		memberDto.setSalt(salt);
+//		memberDto.setUserPwd(pwd);
+		memberDto.setUserPwd(passwordEncoder.encode(pwd));
+		memberDto.setRole(MemberRole.ROLE_USER);
+//		memberDto.setUserId("doNotUserSalt");
 
 		System.out.println(memberDto);
 		// TODO 중복 아이디 경우 처리 필요
@@ -40,31 +50,35 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public TokenResponseDto loginMember(MemberDto memberDto) throws Exception {
-		String pwd = memberDto.getUserPwd();
-		String salt = pwd + getUserSalt(memberDto);
-		pwd = encrypt(salt);
-		memberDto.setUserPwd(pwd);
-		System.out.println(memberDto);
-		MemberDto loginMember = memberMapper.loginMember(memberDto);
-		System.out.println(loginMember);
-		if (loginMember == null) {
-			log.debug("로그인에서 문제 발생");
-			throw new Exception();
+		try {
+			String pwd = passwordEncoder.encode(memberDto.getUserPwd());
+//			String salt = pwd + getUserSalt(memberDto);
+//			pwd = encrypt(salt);
+			memberDto.setUserPwd(pwd);
+			memberDto.setRole(MemberRole.ROLE_USER);
+			System.out.println(memberDto);
+//			MemberDto loginMember = memberMapper.loginMember(memberDto);
+//			if (loginMember == null) {
+//				log.debug("로그인에서 문제 발생");
+//				throw new Exception();
+//			}
+//			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberDto.getUserId(), pwd);
+//			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+			JwtDto jwtDto = JwtDto.builder()
+					.userId(memberDto.getUserId())
+					.authorities(MemberRole.ROLE_USER.toString())
+					.build();
+//			JwtDto jwtDto = new JwtDto(memberDto);
+
+			TokenResponseDto tokenResponseDto = jwtProvider.generateToken(jwtDto);
+			System.out.println(tokenResponseDto);
+			return tokenResponseDto;
 		}
-//		System.out.println(loginMember);
-//		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberDto.getUserId(), memberDto.getUserPwd());
-//		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//		System.out.println(loginMember);
-
-		JwtDto jwtDto = new JwtDto();
-		jwtDto.setUserId(memberDto.getUserId());
-//		JwtDto jwtDto = new JwtDto().builder()
-//				.userId(memberDto.getUserId())
-//				.build();
-
-		TokenResponseDto tokenResponseDto = jwtProvider.generateToken(jwtDto);
-		System.out.println(tokenResponseDto);
-		return tokenResponseDto;
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@Override
@@ -79,7 +93,13 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getUserSalt(memberDto);
 
 	}
-	
+
+	@Override
+	public MemberDto findByUserId(String userId) throws Exception {
+		System.out.println("fffff" + userId);
+		return memberMapper.findByUserId(userId);
+	}
+
 	public String salt() {
 		String salt = "";
 		try {

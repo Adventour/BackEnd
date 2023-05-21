@@ -1,6 +1,8 @@
 package com.ssafy.auth.jwt;
 
 import com.ssafy.auth.dto.TokenResponseDto;
+import com.ssafy.auth.error.ErrorCode;
+import com.ssafy.auth.error.exception.UnauthorizedException;
 import com.ssafy.auth.redis.RedisService;
 import io.jsonwebtoken.*;
 import lombok.AllArgsConstructor;
@@ -8,12 +10,21 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /** JWT Token 생성 클래스 */
 @Slf4j
@@ -40,7 +51,7 @@ public class JwtProvider {
                 .setIssuer("msr")
                 .setIssuedAt(now)
                 .setSubject(jwtDto.getUserId())
-//                .claim(AUTHORITIES_KEY, jwtDto.getAuthorities())
+                .claim(AUTHORITIES_KEY, jwtDto.getAuthorities())
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(SignatureAlgorithm.HS512, encodeKey)
                 .compact();
@@ -115,6 +126,38 @@ public class JwtProvider {
     public boolean validateRefreshToken(String userId, String refreshToken) {
         String redisRt = redisService.getValues(userId);
         return refreshToken.equals(redisRt);
+    }
+
+
+    public Claims parseClaims(String accessToken) {
+        final String encodedKey = Base64.getEncoder().encodeToString(JWT_SECRET.getBytes());
+
+        try {
+            return Jwts.parser()
+                    .setSigningKey(encodedKey)
+                    .parseClaimsJws(accessToken)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
+    }
+
+    public Authentication getAuthentication(String accessToken) {
+        Claims claims = parseClaims(accessToken);
+
+        if (claims.get(AUTHORITIES_KEY) == null) {
+            throw new UnauthorizedException(ErrorCode.INVALID_AUTH_TOKEN);
+        }
+
+        //권한 정보 가져오기
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        //Authentication 리턴
+        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
 }
