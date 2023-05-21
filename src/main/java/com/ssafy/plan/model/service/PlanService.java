@@ -11,4 +11,7 @@ public interface PlanService {
     List<PlanDto> findPlansByUserId(MemberDto memberDto) throws Exception;
     List<PlanDetailDto> findPlanDetailsByPlanId(PlanDto planDto) throws Exception;
 
+    void addPlan(PlanDto planDto);
+
+    void addPlanDetails(List<PlanDetailDto> planDetailDtoList);
 }

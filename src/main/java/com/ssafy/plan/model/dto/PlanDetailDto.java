@@ -9,7 +9,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class PlanDetailDto {
 
-    private String planId;
+    private int planId;
     private int planOrder;
     private int contentId;
     private String descript;

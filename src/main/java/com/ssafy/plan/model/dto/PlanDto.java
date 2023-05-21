@@ -8,7 +8,7 @@ import lombok.*;
 @RequiredArgsConstructor
 public class PlanDto {
 	private int planId;
-	private int userId;
+	private String userId;
 	private String planName;
 
 }

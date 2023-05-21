@@ -28,4 +28,14 @@ public class PlanServiceImp implements PlanService{
     public List<PlanDetailDto> findPlanDetailsByPlanId(PlanDto planDto) throws Exception {
         return planMapper.findPlanDetailsByPlanId(planDto);
     }
+
+    @Override
+    public void addPlan(PlanDto planDto) {
+        planMapper.addPlan(planDto);
+    }
+
+    @Override
+    public void addPlanDetails(List<PlanDetailDto> planDetailDtoList) {
+        planMapper.addPlanDetails(planDetailDtoList);
+    }
 }
