@@ -3,8 +3,11 @@ package com.ssafy.member.controller;
 import javax.servlet.http.HttpSession;
 
 import com.ssafy.auth.dto.TokenResponseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +27,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/member")
 @Api(tags = "유저")
+@RequiredArgsConstructor
 public class MemberController {
-	private MemberService memberService;
-	
-	public MemberController(MemberService memberService) {
-		this.memberService = memberService;
-	}
+	private final MemberService memberService;
 
 	@PostMapping("/regist")
 	@ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
@@ -38,11 +38,19 @@ public class MemberController {
 		try {
 			memberService.registerMember(memberDto);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(memberDto, HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(memberDto, HttpStatus.OK);
 	}
-	
+
+//	@GetMapping("/test")
+//	public ResponseEntity<?> test(Authentication authentication) {
+////		authentication.getName();
+//		System.out.println("!!!!!"+authentication.getName());
+//		return new ResponseEntity<>(authentication.getName(), HttpStatus.OK);
+//	}
+
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
 	public ResponseEntity<?> login(@RequestBody MemberDto memberDto) throws Exception {

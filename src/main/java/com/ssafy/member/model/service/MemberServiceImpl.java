@@ -8,8 +8,6 @@ import java.util.Base64;
 import com.ssafy.auth.dto.TokenResponseDto;
 import com.ssafy.auth.jwt.JwtDto;
 import com.ssafy.auth.jwt.JwtProvider;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,15 +17,11 @@ import com.ssafy.member.model.mapper.MemberMapper;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-	private MemberMapper memberMapper;
-	private JwtProvider jwtProvider;
-
-//	public MemberServiceImpl(MemberMapper memberMapper) {
-//		this.memberMapper = memberMapper;
-//	}
+	private final MemberMapper memberMapper;
+	private final JwtProvider jwtProvider;
 
 	@Override
 	public int registerMember(MemberDto memberDto) throws Exception {
@@ -50,11 +44,18 @@ public class MemberServiceImpl implements MemberService {
 		String salt = pwd + getUserSalt(memberDto);
 		pwd = encrypt(salt);
 		memberDto.setUserPwd(pwd);
+		System.out.println(memberDto);
 		MemberDto loginMember = memberMapper.loginMember(memberDto);
+		System.out.println(loginMember);
 		if (loginMember == null) {
 			log.debug("로그인에서 문제 발생");
 			throw new Exception();
 		}
+//		System.out.println(loginMember);
+//		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberDto.getUserId(), memberDto.getUserPwd());
+//		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+//		System.out.println(loginMember);
+
 		JwtDto jwtDto = new JwtDto();
 		jwtDto.setUserId(memberDto.getUserId());
 //		JwtDto jwtDto = new JwtDto().builder()

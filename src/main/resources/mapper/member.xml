@@ -14,10 +14,12 @@
 		<result column="user_gugun" property="userGugun"/>
 		<result column="salt" property="salt"/>
 	</resultMap>
-	
 
+	<insert id="registerMember" parameterType="memberDto">
+		insert into members (user_id, user_name, user_pwd, user_email, user_sido, user_gugun, salt)
+		values (#{userId}, #{userName}, #{userPwd}, #{userEmail}, #{userSido}, #{userGugun}, #{salt})
+	</insert>
 
-	
 	<select id="loginMember" parameterType="memberDto" resultMap="member">
 		select user_id, user_name from members
 		where user_id = #{userId} and user_pwd = #{userPwd}

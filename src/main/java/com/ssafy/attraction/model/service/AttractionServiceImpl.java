@@ -5,8 +5,6 @@ import java.util.List;
 import com.ssafy.attraction.model.dto.GugunDto;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.attraction.model.dao.AttractionDao;
-import com.ssafy.attraction.model.dao.AttractionDaoImpl;
 import com.ssafy.attraction.model.dto.AttractionDto;
 import com.ssafy.attraction.model.mapper.AttractionMapper;
 

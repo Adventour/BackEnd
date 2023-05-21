@@ -9,8 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface PlanMapper {
-    List<PlanDto> findPlansByUserId(MemberDto memberDto);
-    List<PlanDetailDto> findPlanDetailsByPlanId(PlanDto planDto);
+    List<PlanDto> findPlansByMemberDto(MemberDto memberDto);
+    List<PlanDetailDto> findPlanDetailsByPlanDto(PlanDto planDto);
 
     void addPlan(PlanDto planDto);
 

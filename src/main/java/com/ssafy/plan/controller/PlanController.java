@@ -1,21 +1,12 @@
 package com.ssafy.plan.controller;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.plan.model.dto.PlanDetailDto;
 import com.ssafy.plan.model.dto.PlanDto;
+import com.ssafy.plan.model.dto.PlanResponseDto;
 import com.ssafy.plan.model.service.PlanService;
-import com.ssafy.plan.model.service.PlanServiceImp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -51,15 +42,21 @@ public class PlanController {
 
 	// TODO
 	// 		Authentication 처리해서 본인 것 받아오는 걸로
-	@GetMapping("/search")
+	@PostMapping("/search")
 	public ResponseEntity<?> searchPlan(@RequestBody MemberDto memberDto) throws Exception {
-		List<PlanDto> planList = planService.findPlansByUserId(memberDto);
-		return new ResponseEntity<>(planList, HttpStatus.OK);
+		try {
+			List<PlanResponseDto> planResponseDtoList = planService.findPlansByMemberDto(memberDto);
+			return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+
 	}
 
 	@GetMapping("/details")
 	public ResponseEntity<?> searchPlanDetail(@RequestBody PlanDto planDto) throws Exception {
-		List<PlanDetailDto> planDetailDtoList = planService.findPlanDetailsByPlanId(planDto);
+		List<PlanDetailDto> planDetailDtoList = planService.findPlanDetailsByPlanDto(planDto);
 		return new ResponseEntity<>(planDetailDtoList, HttpStatus.OK);
 	}
 }

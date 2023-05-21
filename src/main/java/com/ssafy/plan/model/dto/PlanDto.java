@@ -3,8 +3,7 @@ package com.ssafy.plan.model.dto;
 import com.ssafy.attraction.model.dto.AttractionDto;
 import lombok.*;
 
-@Getter
-@ToString
+@Data
 @RequiredArgsConstructor
 public class PlanDto {
 	private int planId;
