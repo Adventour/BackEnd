@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ssafy.attraction.model.dto.GugunDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/attraction")
 @Api(tags = "관광지")
+@RequiredArgsConstructor
 public class AttractionController {
 
-    private AttractionService attractionService;
+    private final AttractionService attractionService;
 
-    public AttractionController(AttractionService attractionService) {
-        this.attractionService = attractionService;
-    }
 
     @GetMapping("/search")
     @ApiOperation(value = "관광지 검색", notes = "관광지 검색 요청 API 입니다.")

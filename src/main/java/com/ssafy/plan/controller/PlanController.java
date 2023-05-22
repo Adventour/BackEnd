@@ -1,61 +1,48 @@
 package com.ssafy.plan.controller;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.ssafy.member.model.dto.MemberDto;
+import com.ssafy.member.model.service.MemberService;
+import com.ssafy.plan.model.dto.PlanDetailDto;
+import com.ssafy.plan.model.dto.PlanDto;
+import com.ssafy.plan.model.dto.PlanResponseDto;
 import com.ssafy.plan.model.service.PlanService;
-import com.ssafy.plan.model.service.PlanServiceImp;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
-@WebServlet("/plan")
-public class PlanController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-	PlanService planService;
+@Slf4j
+@RestController
+@RequestMapping("/plan")
+@RequiredArgsConstructor
+public class PlanController {
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		planService = PlanServiceImp.getInstance();
-	}
-	
-	private void forward(HttpServletRequest request, HttpServletResponse response, String path)
-			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-		dispatcher.forward(request, response);
-	}
+	private final PlanService planService;
+	private final MemberService memberService;
 
-	private void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
-		response.sendRedirect(request.getContextPath() + path);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		doGet(request, response);
-	}
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String path = "";
-		try {
-			String action = request.getParameter("action");
-	
-			if ("mvplan".equals(action)) {
-				path = "/plan.jsp";
-				redirect(request, response, path);
-			} else if ("search".equals(action)) {
-//				path = search(request, response);
-//				forward(request, response, path);
-			} 
-		} catch (Exception e) {
-			path = "/error/error.jsp";
-			redirect(request, response, path);
-		}
+	@PostMapping("/add")
+	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
+		planService.addPlanAndDetails(auth.getName(), contentIdList);
+		// TODO
+		//		PlanResponseDto 보내주던지 하기
+		return new ResponseEntity<>("성공", HttpStatus.OK);
 	}
 
+	@GetMapping("/search")
+	public ResponseEntity<?> searchPlan(Authentication auth) throws Exception {
+		MemberDto memberDto = memberService.findByUserId(auth.getName());
+		List<PlanResponseDto> planResponseDtoList = planService.findPlansByMemberDto(memberDto);
+		return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
+	}
+
+	@GetMapping("/details")
+	public ResponseEntity<?> searchPlanDetail(@RequestBody PlanDto planDto) throws Exception {
+		List<PlanDetailDto> planDetailDtoList = planService.findPlanDetailsByPlanDto(planDto);
+		return new ResponseEntity<>(planDetailDtoList, HttpStatus.OK);
+	}
 }

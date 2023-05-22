@@ -1,10 +1,15 @@
 package com.ssafy.member.controller;
 
 import javax.servlet.http.HttpSession;
+
+import com.ssafy.auth.dto.TokenResponseDto;
+import com.ssafy.member.model.dto.MemberResponseDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,29 +24,49 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/member")
 @Api(tags = "유저")
+@RequiredArgsConstructor
+@Transactional
 public class MemberController {
-	private MemberService memberService;
-	
-	public MemberController(MemberService memberService) {
-		this.memberService = memberService;
-	}
+	private final MemberService memberService;
 
+
+	/** @return id, name, email, domain
+	 * */
+	@GetMapping("/")
+	public ResponseEntity<?> myProfile(Authentication auth) throws Exception {
+		MemberDto memberDto = memberService.findByUserId(auth.getName());
+		return new ResponseEntity<>(MemberResponseDto.of(memberDto), HttpStatus.OK);
+	}
 	@PostMapping("/regist")
 	@ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
 	public ResponseEntity<?> regist(@RequestBody MemberDto memberDto) throws Exception {
-		memberService.registerMember(memberDto);
-		return new ResponseEntity<MemberDto>(memberDto, HttpStatus.OK);
+		System.out.println(memberDto);
+		try {
+			memberService.registerMember(memberDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(memberDto, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(memberDto, HttpStatus.OK);
 	}
-	
+
+
+
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
-	public ResponseEntity<?> login(@RequestBody MemberDto memberDto, HttpSession session) throws Exception {
-		MemberDto loginMember = memberService.loginMember(memberDto);
-		session.setAttribute("userinfo", loginMember);
-		return new ResponseEntity<MemberDto>(loginMember, HttpStatus.OK);
+	public ResponseEntity<?> login(@RequestBody MemberDto memberDto) throws Exception {
+		TokenResponseDto tokenResponseDto = null;
+//		log.debug("로그인한 사용자 이름: " +auth.getName());
+		try {
+			tokenResponseDto = memberService.loginMember(memberDto);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.valueOf("로그인 실패"));
+		}
+		return new ResponseEntity<TokenResponseDto>(tokenResponseDto, HttpStatus.OK);
 	}
 	
 	@GetMapping("/logout")
@@ -55,9 +80,9 @@ public class MemberController {
 	@ApiOperation(value = "정보 수정", notes = "회원 정보 수정 요청 API 입니다.")
 	public ResponseEntity<?> modify(@RequestBody MemberDto modifyDto, HttpSession session) throws Exception {
 		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
-		memberDto.setUserId(modifyDto.getUserId());
-		memberDto.setUserName(modifyDto.getUserName());
-		memberDto.setUserPwd(modifyDto.getUserPwd());
+		memberDto.setId(modifyDto.getId());
+		memberDto.setName(modifyDto.getName());
+		memberDto.setPwd(modifyDto.getPwd());
 		memberService.modifyMember(memberDto);
 		session.setAttribute("userinfo", memberDto);
 		

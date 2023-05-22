@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.plan.model.mapper.PlanMapper">
+
+    <resultMap type="planDto" id="plan">
+        <result column="plan_id" property="planId"/>
+        <result column="user_id" property="userId"/>
+        <result column="plan_name" property="planName"/>
+    </resultMap>
+
+    <resultMap type="planDetailDto" id="planDetail">
+        <result column="plan_id" property="planId"/>
+        <result column="plan_order" property="planOrder"/>
+        <result column="content_id" property="contentId"/>
+        <result column="descript" property="descript"/>
+    </resultMap>
+
+
+<!--    <select id=""-->
+    <select id="findPlansByMemberDto" parameterType="memberDto" resultMap="plan">
+        select * from plans where user_id = #{id}
+    </select>
+    <select id="findPlanDetailsByPlanDto" parameterType="planDto" resultMap="planDetail">
+        select * from plan_detail where plan_id = #{planId}
+    </select>
+
+    <insert id="addPlan" parameterType="planDto">
+        insert into plans (user_id, plan_name)
+        values (#{userId}, #{planName})
+        <selectKey resultType="int" keyProperty="planId" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="addPlanDetails" parameterType="java.util.List">
+        insert into plan_detail (plan_id, plan_order, content_id, descript)
+        values
+            <foreach collection="list" item="item" separator=",">
+                (#{item.planId}, #{item.planOrder}, #{item.contentId}, #{item.descript})
+            </foreach>
+    </insert>
+</mapper>
