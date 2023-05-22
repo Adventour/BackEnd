@@ -7,14 +7,15 @@ import com.ssafy.board.model.dto.BoardDto;
 
 public interface BoardService {
 
-	void writeArticle(BoardDto boardDto) throws SQLException;
+	void writeArticle(BoardDto boardDto) throws Exception;
 
 	List<BoardDto> listArticle() throws SQLException;
 
 	BoardDto getArticle(int articleNo) throws SQLException;
 
-	void modifyArticle(BoardDto boardDto) throws SQLException;
+	void modifyArticle(BoardDto boardDto) throws Exception;
 
-	void deleteArticle(int articleNo) throws SQLException;
+	void deleteArticle(int articleNo, String path) throws Exception;
 
+	String getImage(int articleNo) throws SQLException;
 }
