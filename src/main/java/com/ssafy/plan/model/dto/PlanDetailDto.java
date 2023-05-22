@@ -1,12 +1,12 @@
 package com.ssafy.plan.model.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @ToString
-@RequiredArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlanDetailDto {
 
     private int planId;

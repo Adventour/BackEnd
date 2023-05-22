@@ -15,4 +15,6 @@ public interface PlanService {
     void addPlan(PlanDto planDto);
 
     void addPlanDetails(List<PlanDetailDto> planDetailDtoList);
+
+    void addPlanAndDetails(String userId, List<Integer> contentIdList);
 }
