@@ -7,7 +7,7 @@ import com.ssafy.board.model.dto.BoardDto;
 
 public interface BoardService {
 
-	void writeArticle(BoardDto boardDto) throws SQLException;
+	void writeArticle(BoardDto boardDto) throws Exception;
 
 	List<BoardDto> listArticle() throws SQLException;
 
@@ -15,6 +15,6 @@ public interface BoardService {
 
 	void modifyArticle(BoardDto boardDto) throws SQLException;
 
-	void deleteArticle(int articleNo) throws SQLException;
+	void deleteArticle(int articleNo, String path) throws Exception;
 
 }
