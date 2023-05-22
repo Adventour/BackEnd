@@ -4,7 +4,9 @@ import com.ssafy.attraction.model.dto.AttractionDto;
 import lombok.*;
 
 @Data
-@RequiredArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlanDto {
 	private int planId;
 	private String userId;

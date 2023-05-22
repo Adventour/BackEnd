@@ -27,41 +27,12 @@ public class PlanController {
 
 	@PostMapping("/add")
 	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
-//		planService.addPlan(planDto);
+		planService.addPlanAndDetails(auth.getName(), contentIdList);
 
 		// TODO
-		//		임시 테스트용으로 PlanDto 만 받아옴, planDetailDto 필요
-		// 		planId AutoIncrement 변경 필요
-
-//		return new ResponseEntity<>(planDto, HttpStatus.OK);
-		System.out.println("!!" + auth);
-		log.debug("PC addPlan : " + contentIdList);
-		log.debug("PC name : " +auth.getName());
-
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		//		PlanResponseDto 보내주던지 하기
+		return new ResponseEntity<>("성공", HttpStatus.OK);
 	}
-
-	@PostMapping("/test")
-	public ResponseEntity<?> addPlanDetails(@RequestBody List<PlanDetailDto> planDetailDtoList) {
-		planService.addPlanDetails(planDetailDtoList);
-
-		return new ResponseEntity<>(planDetailDtoList, HttpStatus.OK);
-	}
-
-
-	// TODO
-	// 		Authentication 처리해서 본인 것 받아오는 걸로
-//	@PostMapping("/search")
-//	public ResponseEntity<?> searchPlan(@RequestBody MemberDto memberDto) throws Exception {
-//		try {
-//			List<PlanResponseDto> planResponseDtoList = planService.findPlansByMemberDto(memberDto);
-//			return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return new ResponseEntity<>(null, HttpStatus.OK);
-//		}
-//
-//	}
 
 	@GetMapping("/search")
 	public ResponseEntity<?> searchPlan(Authentication auth) throws Exception {
