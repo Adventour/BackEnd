@@ -1,5 +1,7 @@
 package com.ssafy.auth.jwt;
 
+import com.ssafy.auth.error.ErrorCode;
+import com.ssafy.auth.error.exception.ForbiddenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -21,10 +23,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
             AccessDeniedException accessDeniedException
     ) throws IOException, ServletException {
         // 필요한 권한이 없이 접근하려 할때 403
-        try {
-            throw new Exception("권한이 없습니다.");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        throw new ForbiddenException(ErrorCode.FORBIDDEN_USER);
     }
 }

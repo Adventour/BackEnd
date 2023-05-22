@@ -51,10 +51,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public TokenResponseDto loginMember(MemberDto memberDto) throws Exception {
 		try {
-			String pwd = passwordEncoder.encode(memberDto.getPwd());
+//			String pwd = passwordEncoder.encode(memberDto.getPwd());
 //			String salt = pwd + getUserSalt(memberDto);
 //			pwd = encrypt(salt);
-			memberDto.setPwd(pwd);
+//			memberDto.setPwd(pwd);
 			memberDto.setRole(MemberRole.ROLE_USER);
 			System.out.println(memberDto);
 //			MemberDto loginMember = memberMapper.loginMember(memberDto);
@@ -62,8 +62,9 @@ public class MemberServiceImpl implements MemberService {
 //				log.debug("로그인에서 문제 발생");
 //				throw new Exception();
 //			}
-//			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberDto.getUserId(), pwd);
-//			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+			UsernamePasswordAuthenticationToken authenticationToken =
+					new UsernamePasswordAuthenticationToken(memberDto.getId(), memberDto.getPassword());
+			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
 			JwtDto jwtDto = JwtDto.builder()
 					.userId(memberDto.getId())
