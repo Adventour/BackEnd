@@ -6,6 +6,8 @@ import com.ssafy.attraction.model.dto.AttractionDto;
 import com.ssafy.attraction.model.dto.GugunDto;
 
 public interface AttractionService {
+
+    public AttractionDto findAttractionById(int contentId);
 	public List<AttractionDto> searchList(AttractionDto attractionDto);
 
     public List<GugunDto> getGugun(int sidoCode);
