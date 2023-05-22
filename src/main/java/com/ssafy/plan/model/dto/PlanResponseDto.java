@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class PlanResponseDto {
     private String planName;
-//    private List<PlanDetailDto> planDetailDtoList;
     private String[] attractionImages;
     private String[] attractionTitles;
 

@@ -1,6 +1,7 @@
 package com.ssafy.plan.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.member.model.service.MemberService;
@@ -24,15 +25,20 @@ public class PlanController {
 	private final PlanService planService;
 	private final MemberService memberService;
 
-	@PostMapping("/")
-	public ResponseEntity<?> addPlan(@RequestBody PlanDto planDto) {
-		planService.addPlan(planDto);
+	@PostMapping("/add")
+	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
+//		planService.addPlan(planDto);
 
 		// TODO
 		//		임시 테스트용으로 PlanDto 만 받아옴, planDetailDto 필요
 		// 		planId AutoIncrement 변경 필요
 
-		return new ResponseEntity<>(planDto, HttpStatus.OK);
+//		return new ResponseEntity<>(planDto, HttpStatus.OK);
+		System.out.println("!!" + auth);
+		log.debug("PC addPlan : " + contentIdList);
+		log.debug("PC name : " +auth.getName());
+
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 
 	@PostMapping("/test")
