@@ -19,15 +19,11 @@ import java.util.function.Function;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto implements UserDetails {
-    private String userId;
-    private String userNameN;
-    private String userPwd;
-    private String userEmail;
-    private String userDomain;
-    private int userSido;
-    private int userGugun;
-    private String salt;
-
+    private String id;
+    private String name;
+    private String pwd;
+    private String email;
+    private String domain;
     private MemberRole role;
 
     @Override
@@ -37,12 +33,12 @@ public class MemberDto implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userPwd;
+        return pwd;
     }
 
     @Override
     public String getUsername() {
-        return userId;
+        return id;
     }
 
     @Override

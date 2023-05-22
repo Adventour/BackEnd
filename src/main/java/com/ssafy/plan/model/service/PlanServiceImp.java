@@ -1,11 +1,14 @@
 package com.ssafy.plan.model.service;
 
+import com.ssafy.attraction.model.dto.AttractionDto;
+import com.ssafy.attraction.model.mapper.AttractionMapper;
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.plan.model.dto.PlanDetailDto;
 import com.ssafy.plan.model.dto.PlanDto;
 import com.ssafy.plan.model.dto.PlanResponseDto;
 import com.ssafy.plan.model.mapper.PlanMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,31 +17,39 @@ import java.util.List;
 
 @Slf4j
 @Service
-//@RequiredArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
+//@AllArgsConstructor
 public class PlanServiceImp implements PlanService{
 
-    private PlanMapper planMapper;
+    private final PlanMapper planMapper;
+    private final AttractionMapper attractionMapper;
 
     @Override
     public List<PlanResponseDto> findPlansByMemberDto(MemberDto memberDto) throws Exception {
         List<PlanResponseDto> planResponseDtoList = new ArrayList<>();
         List<PlanDto> planDtoList = planMapper.findPlansByMemberDto(memberDto);
-        System.out.println(planDtoList);
         for (PlanDto planDto : planDtoList) {
-            System.out.println(planDto);
+            List<PlanDetailDto> planDetailDtoList = planMapper.findPlanDetailsByPlanDto(planDto);
+            log.debug("PlanServiceImpl pDL size : " + planDetailDtoList.size());
             PlanResponseDto planResponseDto = PlanResponseDto.builder()
                     .planName(planDto.getPlanName())
-                    .planDetailDtoList(new ArrayList<>())
+//                    .planDetailDtoList(new ArrayList<>())
+                    .attractionImages(new String[planDetailDtoList.size()])
+                    .attractionTitles(new String[planDetailDtoList.size()])
                     .build();
             System.out.println("pRD : " + planResponseDto);
-            List<PlanDetailDto> planDetailDtoList = planMapper.findPlanDetailsByPlanDto(planDto);
             System.out.println(planDetailDtoList);
             for (PlanDetailDto planDetailDto : planDetailDtoList) {
-                planResponseDto.addPlanDetail(planDetailDto);
+//                planResponseDto.addPlanDetail(planDetailDto);
+                int contentId = planDetailDto.getContentId();
+                AttractionDto attractionDto = attractionMapper.findAttractionById(contentId);
+                int idx = planDetailDto.getPlanOrder();
+                planResponseDto.getAttractionImages()[idx-1] = attractionDto.getImage();
+                planResponseDto.getAttractionTitles()[idx-1] = attractionDto.getTitle();
             }
             planResponseDtoList.add(planResponseDto);
         }
+        log.debug("PlanServiceImpl pRDL : " + planResponseDtoList);
         return planResponseDtoList;
     }
 

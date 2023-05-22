@@ -22,6 +22,11 @@
 		<result column="gugun_name" property="name"/>
 	</resultMap>
 
+	<select id="findAttractionById" parameterType="int" resultMap="attraction">
+		select * from attraction
+		where content_id = #{contentId}
+	</select>
+
 	<select id="searchList" parameterType="attractionDto" resultMap="attraction">
 		select * from attraction
 		where sido_code = #{sidoCode}

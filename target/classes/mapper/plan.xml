@@ -20,7 +20,7 @@
 
 <!--    <select id=""-->
     <select id="findPlansByMemberDto" parameterType="memberDto" resultMap="plan">
-        select * from plans where user_id = #{userId}
+        select * from plans where user_id = #{id}
     </select>
     <select id="findPlanDetailsByPlanDto" parameterType="planDto" resultMap="planDetail">
         select * from plan_detail where plan_id = #{planId}
@@ -28,7 +28,7 @@
 
     <insert id="addPlan" parameterType="planDto">
         insert into plans (plan_id, user_id, plan_name)
-        values (#{planId}, #{userId}, #{planName})
+        values (#{planId}, #{id}, #{planName})
     </insert>
 
     <insert id="addPlanDetails" parameterType="java.util.List">

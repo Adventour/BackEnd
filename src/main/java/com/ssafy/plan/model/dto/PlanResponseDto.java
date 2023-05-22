@@ -11,9 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 public class PlanResponseDto {
     private String planName;
-    private List<PlanDetailDto> planDetailDtoList;
+//    private List<PlanDetailDto> planDetailDtoList;
+    private String[] attractionImages;
+    private String[] attractionTitles;
 
-    public void addPlanDetail(PlanDetailDto planDetailDto) {
-        planDetailDtoList.add(planDetailDto);
-    }
+//    public void addPlanDetail(PlanDetailDto planDetailDto) {
+//        planDetailDtoList.add(planDetailDto);
+//    }
+
 }

@@ -3,18 +3,21 @@ package com.ssafy.attraction.model.service;
 import java.util.List;
 
 import com.ssafy.attraction.model.dto.GugunDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.attraction.model.dto.AttractionDto;
 import com.ssafy.attraction.model.mapper.AttractionMapper;
 
 @Service
+@RequiredArgsConstructor
 public class AttractionServiceImpl implements AttractionService{
 
-	private AttractionMapper attractionMapper;
+	private final AttractionMapper attractionMapper;
 
-	public AttractionServiceImpl(AttractionMapper attractionMapper) {
-		this.attractionMapper = attractionMapper;
+	@Override
+	public AttractionDto findAttractionById(int contentId) {
+		return attractionMapper.findAttractionById(contentId);
 	}
 
 	@Override

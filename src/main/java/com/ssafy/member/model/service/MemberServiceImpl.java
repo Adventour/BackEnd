@@ -32,12 +32,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int registerMember(MemberDto memberDto) throws Exception {
-		String pwd = memberDto.getUserPwd();
+		String pwd = memberDto.getPwd();
 //		String salt = salt();
 //		pwd = encrypt(pwd + salt);
 //		memberDto.setSalt(salt);
 //		memberDto.setUserPwd(pwd);
-		memberDto.setUserPwd(passwordEncoder.encode(pwd));
+		memberDto.setPwd(passwordEncoder.encode(pwd));
 		memberDto.setRole(MemberRole.ROLE_USER);
 //		memberDto.setUserId("doNotUserSalt");
 
@@ -51,10 +51,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public TokenResponseDto loginMember(MemberDto memberDto) throws Exception {
 		try {
-			String pwd = passwordEncoder.encode(memberDto.getUserPwd());
+			String pwd = passwordEncoder.encode(memberDto.getPwd());
 //			String salt = pwd + getUserSalt(memberDto);
 //			pwd = encrypt(salt);
-			memberDto.setUserPwd(pwd);
+			memberDto.setPwd(pwd);
 			memberDto.setRole(MemberRole.ROLE_USER);
 			System.out.println(memberDto);
 //			MemberDto loginMember = memberMapper.loginMember(memberDto);
@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
 //			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
 			JwtDto jwtDto = JwtDto.builder()
-					.userId(memberDto.getUserId())
+					.userId(memberDto.getId())
 					.authorities(MemberRole.ROLE_USER.toString())
 					.build();
 //			JwtDto jwtDto = new JwtDto(memberDto);

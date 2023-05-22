@@ -22,8 +22,8 @@ public class MemberRequestDto {
 
     public MemberDto toUser(PasswordEncoder passwordEncoder) {
         return MemberDto.builder()
-                .userId(userId)
-                .userPwd(passwordEncoder.encode(userPwd))
+                .id(userId)
+                .pwd(passwordEncoder.encode(userPwd))
                 .role(MemberRole.ROLE_USER)
                 .build();
     }

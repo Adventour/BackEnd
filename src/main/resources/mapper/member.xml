@@ -5,47 +5,42 @@
 <mapper namespace="com.ssafy.member.model.mapper.MemberMapper">
 
 	<resultMap type="memberDto" id="member">
-		<result column="user_id" property="userId"/>
-		<result column="user_name" property="userNameN"/>
-		<result column="user_pwd" property="userPwd"/>
-		<result column="user_email" property="userEmail"/>
-		<result column="user_domain" property="userDomain"/>
-		<result column="user_sido" property="userSido"/>
-		<result column="user_gugun" property="userGugun"/>
-		<result column="salt" property="salt"/>
+		<result column="user_id" property="id"/>
+		<result column="user_name" property="name"/>
+		<result column="user_pwd" property="pwd"/>
+		<result column="user_email" property="email"/>
+		<result column="user_domain" property="domain"/>
 	</resultMap>
 
 	<insert id="registerMember" parameterType="memberDto">
-		insert into members (user_id, user_name, user_pwd, user_email, user_sido, user_gugun, salt)
-		values (#{userId}, #{userNameN}, #{userPwd}, #{userEmail}, #{userSido}, #{userGugun}, #{salt})
+		insert into members (user_id, user_name, user_pwd, user_email)
+		values (#{id}, #{name}, #{pwd}, #{email})
 	</insert>
 
 	<select id="loginMember" parameterType="memberDto" resultMap="member">
 		select user_id, user_name from members
-		where user_id = #{userId} and user_pwd = #{userPwd}
+		where user_id = #{id} and user_pwd = #{pwd}
 	</select>
 	
 	<update id="modifyMember" parameterType="memberDto">
 		update members
 		<trim prefix="set" suffixOverrides=",">
-			<if test="userName">user_name = #{userNameN},</if>
-			<if test="userPwd">user_pwd = #{userPwd},</if>
-			<if test="userEmail">user_email = #{userEmail},</if>
-			<if test="userDomain">email_domain = #{userDomain},</if>
-			<if test="userSido">user_sido = #{userSido},</if>
-			<if test="userGugun">user_gugun = #{userGugun},</if>
+			<if test="userName">user_name = #{name},</if>
+			<if test="pwd">user_pwd = #{pwd},</if>
+			<if test="email">user_email = #{email},</if>
+			<if test="domain">email_domain = #{domain},</if>
 		</trim>
-		where user_id = #{userId}
+		where user_id = #{id}
 	</update>
 
 	<select id="getUserSalt" parameterType="memberDto" resultType="string">
 		select salt from members
-		where user_id = #{userId}
+		where user_id = #{id}
 	</select>
 
 	<select id="findByUserId" parameterType="string" resultMap="member">
 		select * from members
-		where user_id = #{userId}
+		where user_id = #{id}
 	</select>
 	
 </mapper>
