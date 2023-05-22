@@ -22,8 +22,12 @@ public interface BoardMapper {
 	void deleteArticle(int articleNo) throws SQLException;
 
 	void registerFile(BoardDto boardDto) throws Exception;
+	void modifyFile(BoardDto boardDto) throws Exception;
 	void deleteFile(int articleNo) throws Exception;
+	void deleteReplies(int articleNo) throws Exception;
 	List<FileInfoDto> fileInfoList(int articleNo) throws Exception;
+
+	String getImage(int articleNo) throws SQLException;
 
 //	void updateHit(int articleNo) throws SQLException;
 //	int getTotalArticleCount(Map<String, Object> param) throws SQLException;

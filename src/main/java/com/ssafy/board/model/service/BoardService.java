@@ -13,8 +13,9 @@ public interface BoardService {
 
 	BoardDto getArticle(int articleNo) throws SQLException;
 
-	void modifyArticle(BoardDto boardDto) throws SQLException;
+	void modifyArticle(BoardDto boardDto) throws Exception;
 
 	void deleteArticle(int articleNo, String path) throws Exception;
 
+	String getImage(int articleNo) throws SQLException;
 }

@@ -36,17 +36,28 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getArticle(articleNo);
 	}
 
-	public void modifyArticle(BoardDto boardDto) throws SQLException {
+	public void modifyArticle(BoardDto boardDto) throws Exception {
+		System.out.println(boardDto.getSaveFile()+"saveFile.........");
 		boardMapper.modifyArticle(boardDto);
+		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+		if (fileInfos != null && !fileInfos.isEmpty()) {
+			boardMapper.modifyFile(boardDto);
+		}
 	}
 
 	public void deleteArticle(int articleNo, String path) throws Exception {
 		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
 		boardMapper.deleteFile(articleNo);
+		boardMapper.deleteReplies(articleNo);
 		boardMapper.deleteArticle(articleNo);
 		for(FileInfoDto fileInfoDto : fileList) {
 			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
 			file.delete();
 		}
+	}
+
+	@Override
+	public String getImage(int articleNo) throws SQLException {
+		return boardMapper.getImage(articleNo);
 	}
 }
