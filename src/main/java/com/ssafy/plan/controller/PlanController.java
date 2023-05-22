@@ -28,7 +28,6 @@ public class PlanController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
 		planService.addPlanAndDetails(auth.getName(), contentIdList);
-
 		// TODO
 		//		PlanResponseDto 보내주던지 하기
 		return new ResponseEntity<>("성공", HttpStatus.OK);
@@ -37,16 +36,8 @@ public class PlanController {
 	@GetMapping("/search")
 	public ResponseEntity<?> searchPlan(Authentication auth) throws Exception {
 		MemberDto memberDto = memberService.findByUserId(auth.getName());
-		log.debug("PlanController auth.getName : " + auth.getName());
-		try {
-			List<PlanResponseDto> planResponseDtoList = planService.findPlansByMemberDto(memberDto);
-			log.debug("PlanController planResponseDtoList : " + planResponseDtoList);
-			return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(null, HttpStatus.OK);
-		}
-
+		List<PlanResponseDto> planResponseDtoList = planService.findPlansByMemberDto(memberDto);
+		return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
 	}
 
 	@GetMapping("/details")

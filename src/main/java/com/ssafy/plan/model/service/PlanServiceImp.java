@@ -7,7 +7,6 @@ import com.ssafy.plan.model.dto.PlanDetailDto;
 import com.ssafy.plan.model.dto.PlanDto;
 import com.ssafy.plan.model.dto.PlanResponseDto;
 import com.ssafy.plan.model.mapper.PlanMapper;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,6 @@ public class PlanServiceImp implements PlanService{
             log.debug("PlanServiceImpl pDL size : " + planDetailDtoList.size());
             PlanResponseDto planResponseDto = PlanResponseDto.builder()
                     .planName(planDto.getPlanName())
-//                    .planDetailDtoList(new ArrayList<>())
                     .attractionImages(new String[planDetailDtoList.size()])
                     .attractionTitles(new String[planDetailDtoList.size()])
                     .build();

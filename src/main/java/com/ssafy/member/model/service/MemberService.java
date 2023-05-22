@@ -7,6 +7,5 @@ public interface MemberService {
 	int registerMember(MemberDto memberDto) throws Exception;
 	TokenResponseDto loginMember(MemberDto memberDto) throws Exception;
 	void modifyMember(MemberDto memberDto) throws Exception;
-	public String getUserSalt(MemberDto memberDto) throws Exception;
 	public MemberDto findByUserId(String userId) throws Exception;
 }

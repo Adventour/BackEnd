@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.attraction.model.dto.AttractionDto;
 import com.ssafy.attraction.model.mapper.AttractionMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class AttractionServiceImpl implements AttractionService{
+@Transactional
+public class AttractionServiceImpl implements AttractionService {
 
 	private final AttractionMapper attractionMapper;
 
