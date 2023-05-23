@@ -1,59 +1,54 @@
 package com.ssafy.board.model.service;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.ssafy.board.model.dto.FileInfoDto;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.board.model.dto.BoardDto;
 import com.ssafy.board.model.mapper.BoardMapper;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BoardServiceImpl implements BoardService {
+	private final S3FileUploadService s3FileUploadService;
 	private BoardMapper boardMapper;
 	
-	public BoardServiceImpl(BoardMapper boardMapper) {
+	public BoardServiceImpl(S3FileUploadService s3FileUploadService, BoardMapper boardMapper) {
+		this.s3FileUploadService = s3FileUploadService;
 		this.boardMapper = boardMapper;
 	}
 
 	@Transactional
-	public void writeArticle(BoardDto boardDto) throws Exception {
+	public void writeArticle(BoardDto boardDto, MultipartFile file) throws Exception {
+		if(file != null)
+			boardDto.setSaveFile(s3FileUploadService.upload(file));
 		boardMapper.writeArticle(boardDto);
-		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
-		if (fileInfos != null && !fileInfos.isEmpty()) {
-			boardMapper.registerFile(boardDto);
-		}
 	}
 
 	public    List<BoardDto> listArticle() throws SQLException {
 		return boardMapper.listArticle();
+	}
+	public    List<BoardDto> listDetailArticle(String contentId) throws SQLException {
+		return boardMapper.listDetailArticle(contentId);
 	}
 
 	public BoardDto getArticle(int articleNo) throws SQLException {
 		return boardMapper.getArticle(articleNo);
 	}
 
-	public void modifyArticle(BoardDto boardDto) throws Exception {
-		System.out.println(boardDto.getSaveFile()+"saveFile.........");
+	public void modifyArticle(BoardDto boardDto, MultipartFile file) throws Exception {
+		System.out.println(file.getOriginalFilename());
+		if (file != null)
+			boardDto.setSaveFile(s3FileUploadService.upload(file));
+		System.out.println("파일 수정" + boardDto.getSaveFile());
 		boardMapper.modifyArticle(boardDto);
-		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
-		if (fileInfos != null && !fileInfos.isEmpty()) {
-			boardMapper.modifyFile(boardDto);
-		}
 	}
 
-	public void deleteArticle(int articleNo, String path) throws Exception {
-		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
-		boardMapper.deleteFile(articleNo);
+	public void deleteArticle(int articleNo) throws Exception {
 		boardMapper.deleteReplies(articleNo);
 		boardMapper.deleteArticle(articleNo);
-		for(FileInfoDto fileInfoDto : fileList) {
-			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
-			file.delete();
-		}
 	}
 
 	@Override
