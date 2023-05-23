@@ -36,7 +36,7 @@ public class JwtProvider {
     @Value("${JWT_SECRET_KEY}")
     private String JWT_SECRET;
 
-    private static final long JWT_EXPIRATION_MS = 1000L * 60 * 30; //30분
+    private static final long JWT_EXPIRATION_MS = 1000L * 60 * 30 * 20; //30분
     private static final long REFRESH_TOKEN_EXPIRATION_MS = 1000L * 60 * 60 * 24 * 7; //7일
     private static final String AUTHORITIES_KEY = "role"; //권한 정보 컬럼명
 

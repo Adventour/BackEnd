@@ -41,4 +41,9 @@
                 (#{item.planId}, #{item.planOrder}, #{item.contentId}, #{item.descript})
             </foreach>
     </insert>
+
+    <delete id="deletePlanDetails" parameterType="int">
+        delete from plan_detail
+        where plan_id = #{planId}
+    </delete>
 </mapper>
