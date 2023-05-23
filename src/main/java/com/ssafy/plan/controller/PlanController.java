@@ -56,4 +56,11 @@ public class PlanController {
 		planService.modifyPlanDetails(auth.getName(), planRequestDto);
 		return new ResponseEntity<>("성공", HttpStatus.OK);
 	}
+
+	// plan을 삭제하는 로직
+	@DeleteMapping("/details/{planId}")
+	public ResponseEntity<?> deletePlanDetail(Authentication auth, @PathVariable int planId) {
+		planService.deletePlanDetails(auth.getName(), planId);
+		return new ResponseEntity<>("성공", HttpStatus.OK);
+	}
 }

@@ -20,4 +20,6 @@ public interface PlanService {
     void addPlanAndDetails(String userId, List<Integer> contentIdList);
 
     void modifyPlanDetails(String userId, PlanRequestDto planRequestDto);
+
+    void deletePlanDetails(String userId, int planId);
 }

@@ -110,4 +110,12 @@ public class PlanServiceImp implements PlanService{
 //        planMapper.addPlanDetails();
 
     }
+
+    @Override
+    public void deletePlanDetails(String userId, int planId) {
+//        planMapper.fi
+        // TODO
+        //  userId, plan.userId 비교
+        //  plan, planDetail 삭제 필요
+    }
 }
