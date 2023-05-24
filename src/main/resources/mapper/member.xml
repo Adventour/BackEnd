@@ -25,7 +25,7 @@
 	<update id="modifyMember" parameterType="memberDto">
 		update members
 		<trim prefix="set" suffixOverrides=",">
-			<if test="userName">user_name = #{name},</if>
+			<if test="name">user_name = #{name},</if>
 			<if test="pwd">user_pwd = #{pwd},</if>
 			<if test="email">user_email = #{email},</if>
 			<if test="domain">email_domain = #{domain},</if>

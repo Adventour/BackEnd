@@ -16,7 +16,6 @@ public class BoardDto {
 	private String content;
 	private int hit;
 	private String registerTime;
-	private List<FileInfoDto> fileInfos;
 	private String saveFile;
 	private int contentId;
 }

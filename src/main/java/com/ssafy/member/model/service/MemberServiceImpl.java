@@ -29,17 +29,19 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int registerMember(MemberDto memberDto) throws Exception {
-		String pwd = memberDto.getPwd();
-		memberDto.setPwd(passwordEncoder.encode(pwd));
+		memberDto.setPwd(passwordEncoder.encode(memberDto.getPwd()));
 		memberDto.setRole(MemberRole.ROLE_USER);
 		memberMapper.registerMember(memberDto);
 		return 0;
 	}
-	
+
+	/** @return accessToken, refreshToken
+	 * */
 	@Override
 	public TokenResponseDto loginMember(MemberDto memberDto) throws Exception {
 		// 현재 관리자 권한 없기 때문에 임시 처리
 		memberDto.setRole(MemberRole.ROLE_USER);
+
 		// 검증 부분
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(memberDto.getId(), memberDto.getPassword());
@@ -56,6 +58,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public void modifyMember(MemberDto memberDto) throws Exception {
+		if (memberDto.getPwd() != null)
+			memberDto.setPwd(passwordEncoder.encode(memberDto.getPwd()));
+
 		memberMapper.modifyMember(memberDto);
 	}
 
