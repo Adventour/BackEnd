@@ -55,7 +55,7 @@ jobs:
       id: docker_meta
       uses: crazy-max/ghaction-docker-meta@v1
       with:
-        images: ${{ secrets.DOCKER_REPOSITORY }}
+        images: ${{ secrets.DOCKER_REPOSITORY }}/adventour
         tag-semver: |
           {{version}}
           {{major}}.{{minor}}
@@ -80,8 +80,8 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64
         push: true
-#        tags: ${{ steps.docker_meta.outputs.tags }}
-#        labels: ${{ steps.docker_meta.outputs.labels }}
+        tags: ${{ steps.docker_meta.outputs.tags }}
+        labels: ${{ steps.docker_meta.outputs.labels }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #    - name: Update dependency graph
