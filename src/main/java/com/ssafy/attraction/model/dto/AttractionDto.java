@@ -1,10 +1,14 @@
 package com.ssafy.attraction.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AttractionDto implements Comparable<AttractionDto> {
 	private int contentId; // 얘가 pk라 얘로 찾으면 될듯
 	private int contentTypeId;
@@ -16,9 +20,7 @@ public class AttractionDto implements Comparable<AttractionDto> {
 	private double latitude;
 	private double longitude;
 	private int distance;
-
-	public AttractionDto() {
-	}
+	private int hit;
 
 	public void setDistance() {
 		double nowLatitude = 37.5012743;

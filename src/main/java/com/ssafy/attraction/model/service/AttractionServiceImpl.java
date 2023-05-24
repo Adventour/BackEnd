@@ -37,4 +37,14 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.getOverview(contentId);
 	}
 
+	@Override
+	public List<AttractionDto> getTop3() {
+		return attractionMapper.getTop3();
+	}
+
+	@Override
+	public void updateHit(int contentId) {
+		attractionMapper.updateHit(contentId);
+	}
+
 }

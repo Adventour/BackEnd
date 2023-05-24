@@ -35,6 +35,21 @@ public class AttractionController {
         return new ResponseEntity<List<AttractionDto>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/hit")
+    @ApiOperation(value = "검색한 관광지 TOP3 검색", notes = "검색한 관광지 TOP3 요청 API 입니다.")
+    public ResponseEntity<List<AttractionDto>> top3() {
+        List<AttractionDto> list = new ArrayList<AttractionDto>();
+        list = attractionService.getTop3();
+        return new ResponseEntity<List<AttractionDto>>(list, HttpStatus.OK);
+    }
+
+    @PutMapping("/hit/{contentId}")
+    @ApiOperation(value = "조회한 관광지 조회수 증가", notes = "조회한 관광지 조회수 증가 요청 API 입니다.")
+    public ResponseEntity<Void> updateHit(@PathVariable int contentId) {
+        attractionService.updateHit(contentId);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
     @GetMapping("/gugun")
     @ApiOperation(value = "구군 검색", notes = "구군 검색 요청 API 입니다.")
     public ResponseEntity<List<GugunDto>> gugun(@RequestParam("sido") int sidoCode) {
