@@ -37,6 +37,16 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
+
+    # Create dotenv file
+    - name: Make env file
+      run: |
+        touch ./.env
+        echo "$ENV_PROPERTIES_DEV" > ./.env
+      env:
+        ENV_PROPERTIES_DEV: ${{ secrets.ENV_PROPERTIES_DEV }}
+
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
