@@ -24,6 +24,7 @@ public class BoardServiceImpl implements BoardService {
 	public void writeArticle(BoardDto boardDto, MultipartFile file) throws Exception {
 		if(file != null)
 			boardDto.setSaveFile(s3FileUploadService.upload(file));
+		System.out.println("SERVICE:::" + boardDto.getSaveFile());
 		boardMapper.writeArticle(boardDto);
 	}
 

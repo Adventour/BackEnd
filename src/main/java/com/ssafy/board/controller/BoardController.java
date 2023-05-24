@@ -30,6 +30,7 @@ public class BoardController {
     @PostMapping("/write")
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성 요청 API 입니다.")
     public ResponseEntity<?> write(@ModelAttribute BoardDto boardDto, @RequestParam("upfile") MultipartFile file) throws Exception {
+        System.out.println("CONTROLLER : "+file);
         boardService.writeArticle(boardDto, file);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

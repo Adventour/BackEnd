@@ -38,8 +38,8 @@ public class S3FileUploadService {
         try {
             // 확장자를 찾기 위한 코드
             final String ext = origName.substring(origName.lastIndexOf('.'));
-            if(!"png".equals(ext) || !"jpg".equals(ext) || !"JPG".equals(ext) || !"JPG".equals(ext))
-                return "";
+//            if(!".png".equals(ext) || !".jpg".equals(ext) || !".JPG".equals(ext) || !".JPG".equals(ext))
+//                return "";
             // 파일이름 암호화
             final String saveFileName = getUuid() + ext;
             // 파일 객체 생성
