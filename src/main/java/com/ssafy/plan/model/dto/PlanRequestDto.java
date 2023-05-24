@@ -13,5 +13,6 @@ import java.util.List;
 @Getter
 public class PlanRequestDto {
     private int planId;
+    private String planName;
     private List<Integer> contentIds;
 }
