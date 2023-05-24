@@ -36,6 +36,7 @@ public class PlanServiceImp implements PlanService{
                     .planName(planDto.getPlanName())
                     .attractionImages(new String[planDetailDtoList.size()])
                     .attractionTitles(new String[planDetailDtoList.size()])
+                    .descripts(new String[planDetailDtoList.size()])
                     .contentIds(new int[planDetailDtoList.size()])
                     .build();
             for (PlanDetailDto planDetailDto : planDetailDtoList) {
@@ -45,6 +46,7 @@ public class PlanServiceImp implements PlanService{
                 planResponseDto.getAttractionImages()[idx-1] = attractionDto.getImage();
                 planResponseDto.getAttractionTitles()[idx-1] = attractionDto.getTitle();
                 planResponseDto.getContentIds()[idx-1] = attractionDto.getContentId();
+                planResponseDto.getDescripts()[idx-1] = attractionMapper.getOverview(String.valueOf(contentId));
             }
             planResponseDtoList.add(planResponseDto);
         }
@@ -67,11 +69,11 @@ public class PlanServiceImp implements PlanService{
     }
 
     @Override
-    public void addPlanAndDetails(String userId, List<Integer> contentIdList) {
-        log.debug("addPlanAndDetails : " + userId + ", " + contentIdList);
+    public void addPlanAndDetails(String userId, PlanRequestDto planRequestDto) {
+        log.debug("addPlanAndDetails : " + userId + ", " + planRequestDto);
         PlanDto planDto = PlanDto.builder()
                 .userId(userId)
-                .planName("프론트에서 플랜 네임 입력 필요")
+                .planName(planRequestDto.getPlanName())
                 .build();
         addPlan(planDto);
         // Mybatis secretKey 사용해서 AutoIncrement PlanId 값 찾아옴
@@ -79,10 +81,10 @@ public class PlanServiceImp implements PlanService{
 
         List<PlanDetailDto> planDetailDtoList = new ArrayList<>();
         int idx = 1;
-        for (Integer contentId : contentIdList) {
+        for (Integer contentId : planRequestDto.getContentIds()) {
             PlanDetailDto planDetailDto = PlanDetailDto.builder()
                     .planOrder(idx++)
-                    .descript("descript 처리 필요")
+//                    .descript("descript 처리 필요")
                     .contentId(contentId)
                     .planId(planId)
                     .build();
@@ -113,7 +115,16 @@ public class PlanServiceImp implements PlanService{
 
     @Override
     public void deletePlanDetails(String userId, int planId) {
-//        planMapper.fi
+        PlanDto planDto = planMapper.findPlanByPlanId(planId);
+        if (userId.equals(planDto.getUserId())) {
+            planMapper.deletePlanDetails(planId);
+            planMapper.deletePlan(planId);
+        }
+        else {
+            // 올바르지 않은 접근
+            log.debug("PlanServiceImpl : 올바르지 않은 접근입니다.");
+        }
+
         // TODO
         //  userId, plan.userId 비교
         //  plan, planDetail 삭제 필요

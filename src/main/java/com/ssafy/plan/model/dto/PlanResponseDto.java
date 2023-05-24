@@ -17,6 +17,7 @@ public class PlanResponseDto {
     private String[] attractionImages;
     private String[] attractionTitles;
     private int[] contentIds;
+    private String[] descripts;
 
 //    public void addPlanDetail(PlanDetailDto planDetailDto) {
 //        planDetailDtoList.add(planDetailDto);
