@@ -29,7 +29,8 @@
 
 	<select id="searchList" parameterType="attractionDto" resultMap="attraction">
 		select * from attraction
-		where sido_code = #{sidoCode}
+		where
+		sido_code = #{sidoCode}
 		<if test="gugunCode">and gugun_code = #{gugunCode}</if>
 		<if test="contentTypeId">and content_type_id = #{contentTypeId}</if>
 		<if test="title">and title like CONCAT('%', #{title}, '%')</if>
