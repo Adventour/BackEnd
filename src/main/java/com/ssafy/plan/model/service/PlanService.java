@@ -3,6 +3,7 @@ package com.ssafy.plan.model.service;
 import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.plan.model.dto.PlanDetailDto;
 import com.ssafy.plan.model.dto.PlanDto;
+import com.ssafy.plan.model.dto.PlanRequestDto;
 import com.ssafy.plan.model.dto.PlanResponseDto;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface PlanService {
     void addPlanDetails(List<PlanDetailDto> planDetailDtoList);
 
     void addPlanAndDetails(String userId, List<Integer> contentIdList);
+
+    void modifyPlanDetails(String userId, PlanRequestDto planRequestDto);
+
+    void deletePlanDetails(String userId, int planId);
 }

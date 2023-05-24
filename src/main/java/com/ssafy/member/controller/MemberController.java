@@ -37,14 +37,23 @@ public class MemberController {
 	/** @return id, name, email, domain
 	 * */
 	@GetMapping("/")
+	@ApiOperation(value = "내 프로필", notes = "본인의 회원 정보 조회 요청 API 입니다.")
 	public ResponseEntity<?> myProfile(Authentication auth) throws Exception {
 		MemberDto memberDto = memberService.findByUserId(auth.getName());
 		return new ResponseEntity<>(MemberResponseDto.of(memberDto), HttpStatus.OK);
 	}
+
+	@PutMapping("/")
+	@ApiOperation(value = "프로필 수정", notes = "회원 정보 수정 요청 API 입니다.")
+	public ResponseEntity<?> modify(Authentication auth, @RequestBody MemberDto modifyDto) throws Exception {
+		modifyDto.setId(auth.getName());
+		memberService.modifyMember(modifyDto);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	@PostMapping("/regist")
 	@ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
 	public ResponseEntity<?> regist(@RequestBody MemberDto memberDto) throws Exception {
-		System.out.println(memberDto);
 		try {
 			memberService.registerMember(memberDto);
 		} catch (Exception e) {
@@ -53,8 +62,6 @@ public class MemberController {
 		}
 		return new ResponseEntity<>(memberDto, HttpStatus.OK);
 	}
-
-
 
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
@@ -76,17 +83,6 @@ public class MemberController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@PutMapping("/modify")
-	@ApiOperation(value = "정보 수정", notes = "회원 정보 수정 요청 API 입니다.")
-	public ResponseEntity<?> modify(@RequestBody MemberDto modifyDto, HttpSession session) throws Exception {
-		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
-		memberDto.setId(modifyDto.getId());
-		memberDto.setName(modifyDto.getName());
-		memberDto.setPwd(modifyDto.getPwd());
-		memberService.modifyMember(memberDto);
-		session.setAttribute("userinfo", memberDto);
-		
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+
 	
 }

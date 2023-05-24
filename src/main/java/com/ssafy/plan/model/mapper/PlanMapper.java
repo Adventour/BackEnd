@@ -15,4 +15,6 @@ public interface PlanMapper {
     void addPlan(PlanDto planDto);
 
     void addPlanDetails(List<PlanDetailDto> planDetailDtoList);
+
+    void deletePlanDetails(int planId);
 }

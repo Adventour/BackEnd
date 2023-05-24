@@ -7,6 +7,7 @@ import com.ssafy.member.model.dto.MemberDto;
 import com.ssafy.member.model.service.MemberService;
 import com.ssafy.plan.model.dto.PlanDetailDto;
 import com.ssafy.plan.model.dto.PlanDto;
+import com.ssafy.plan.model.dto.PlanRequestDto;
 import com.ssafy.plan.model.dto.PlanResponseDto;
 import com.ssafy.plan.model.service.PlanService;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +26,9 @@ public class PlanController {
 	private final PlanService planService;
 	private final MemberService memberService;
 
-	@PostMapping("/add")
-	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
-		planService.addPlanAndDetails(auth.getName(), contentIdList);
-		// TODO
-		//		PlanResponseDto 보내주던지 하기
-		return new ResponseEntity<>("성공", HttpStatus.OK);
-	}
 
-	@GetMapping("/search")
+
+	@GetMapping("/")
 	public ResponseEntity<?> searchPlan(Authentication auth) throws Exception {
 		MemberDto memberDto = memberService.findByUserId(auth.getName());
 		List<PlanResponseDto> planResponseDtoList = planService.findPlansByMemberDto(memberDto);
@@ -44,5 +39,28 @@ public class PlanController {
 	public ResponseEntity<?> searchPlanDetail(@RequestBody PlanDto planDto) throws Exception {
 		List<PlanDetailDto> planDetailDtoList = planService.findPlanDetailsByPlanDto(planDto);
 		return new ResponseEntity<>(planDetailDtoList, HttpStatus.OK);
+	}
+
+	@PostMapping("/details")
+	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
+		// TODO
+		//		planName Front에서 받아오기
+		planService.addPlanAndDetails(auth.getName(), contentIdList);
+		// TODO
+		//		PlanResponseDto 보내주던지 하기
+		return new ResponseEntity<>("성공", HttpStatus.OK);
+	}
+
+	@PutMapping("/details")
+	public ResponseEntity<?> modifyPlanDetail(Authentication auth, @RequestBody PlanRequestDto planRequestDto) {
+		planService.modifyPlanDetails(auth.getName(), planRequestDto);
+		return new ResponseEntity<>("성공", HttpStatus.OK);
+	}
+
+	// plan을 삭제하는 로직
+	@DeleteMapping("/details/{planId}")
+	public ResponseEntity<?> deletePlanDetail(Authentication auth, @PathVariable int planId) {
+		planService.deletePlanDetails(auth.getName(), planId);
+		return new ResponseEntity<>("성공", HttpStatus.OK);
 	}
 }
