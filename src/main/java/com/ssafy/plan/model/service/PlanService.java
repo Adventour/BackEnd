@@ -17,7 +17,7 @@ public interface PlanService {
 
     void addPlanDetails(List<PlanDetailDto> planDetailDtoList);
 
-    void addPlanAndDetails(String userId, List<Integer> contentIdList);
+    void addPlanAndDetails(String userId, PlanRequestDto planRequestDto);
 
     void modifyPlanDetails(String userId, PlanRequestDto planRequestDto);
 

@@ -9,6 +9,8 @@ import java.util.List;
 
 @Mapper
 public interface PlanMapper {
+
+    PlanDto findPlanByPlanId(int planId);
     List<PlanDto> findPlansByMemberDto(MemberDto memberDto);
     List<PlanDetailDto> findPlanDetailsByPlanDto(PlanDto planDto);
 
@@ -16,5 +18,8 @@ public interface PlanMapper {
 
     void addPlanDetails(List<PlanDetailDto> planDetailDtoList);
 
+    void deletePlan(int planId);
+
     void deletePlanDetails(int planId);
+
 }

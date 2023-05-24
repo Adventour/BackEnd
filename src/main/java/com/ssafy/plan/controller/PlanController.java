@@ -42,10 +42,8 @@ public class PlanController {
 	}
 
 	@PostMapping("/details")
-	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody List<Integer> contentIdList) {
-		// TODO
-		//		planName Front에서 받아오기
-		planService.addPlanAndDetails(auth.getName(), contentIdList);
+	public ResponseEntity<?> addPlan(Authentication auth, @RequestBody PlanRequestDto planRequestDto) {
+		planService.addPlanAndDetails(auth.getName(), planRequestDto);
 		// TODO
 		//		PlanResponseDto 보내주던지 하기
 		return new ResponseEntity<>("성공", HttpStatus.OK);

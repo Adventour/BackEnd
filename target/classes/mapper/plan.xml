@@ -18,7 +18,9 @@
     </resultMap>
 
 
-<!--    <select id=""-->
+    <select id="findPlanByPlanId" parameterType="int" resultMap="plan">
+        select * from plans where plan_id = #{planId}
+    </select>
     <select id="findPlansByMemberDto" parameterType="memberDto" resultMap="plan">
         select * from plans where user_id = #{id}
     </select>
@@ -41,6 +43,11 @@
                 (#{item.planId}, #{item.planOrder}, #{item.contentId}, #{item.descript})
             </foreach>
     </insert>
+
+    <delete id="deletePlan" parameterType="int">
+        delete from plans
+        where plan_id = #{planId}
+    </delete>
 
     <delete id="deletePlanDetails" parameterType="int">
         delete from plan_detail
