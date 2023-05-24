@@ -32,6 +32,7 @@
 
 	<select id="listArticle" resultMap="article">
 		select * from boards
+		order by register_time desc;
 	</select>
 
 	<select id="listDetailArticle" parameterType="string" resultMap="article">

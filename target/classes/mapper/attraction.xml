@@ -15,6 +15,7 @@
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
 		<result column="distance" property="distance"/>
+		<result column="hit" property="hit"/>
 	</resultMap>
 
 	<resultMap type="GugunDto" id="gugun">
@@ -29,8 +30,8 @@
 
 	<select id="searchList" parameterType="attractionDto" resultMap="attraction">
 		select * from attraction
-		where
-		sido_code = #{sidoCode}
+		where content_id >= 0
+		<if test="sidoCode"> and sido_code = #{sidoCode} </if>
 		<if test="gugunCode">and gugun_code = #{gugunCode}</if>
 		<if test="contentTypeId">and content_type_id = #{contentTypeId}</if>
 		<if test="title">and title like CONCAT('%', #{title}, '%')</if>
@@ -45,4 +46,17 @@
 		select overview from attraction_description
 		where content_id = #{contentId};
 	</select>
+
+	<select id="getTop3" resultMap="attraction">
+		select * from attraction
+		order by hit desc limit 3;
+	</select>
+
+	<update id="updateHit" parameterType="int">
+		update attraction
+		set hit = hit + 1
+		where content_id = ${contentId};
+	</update>
+
+
 </mapper>

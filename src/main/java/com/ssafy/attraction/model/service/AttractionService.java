@@ -13,4 +13,8 @@ public interface AttractionService {
     public List<GugunDto> getGugun(int sidoCode);
 
     String getOverview(String contentId);
+
+    List<AttractionDto> getTop3();
+
+    void updateHit(int contentId);
 }
