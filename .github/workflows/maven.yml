@@ -84,7 +84,7 @@ jobs:
         labels: ${{ steps.docker_meta.outputs.labels }}
         
             #workflow_dispatch
-    - run: gh api /repos/SSAFY9th/EnjoyTrip-Deploy/dispatches -f event_type='event'
+    - run: gh api /repos/SSAFY9th/EnjoyTrip-Deploy/dispatches -f event_type='backend-event'
       env:
         GITHUB_TOKEN: ${{ secrets.DISPATCH_KEY }}
 
