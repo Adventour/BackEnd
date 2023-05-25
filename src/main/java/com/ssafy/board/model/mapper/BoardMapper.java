@@ -23,6 +23,8 @@ public interface BoardMapper {
 
 	String getImage(int articleNo) throws SQLException;
 
+	void updateHit(int articleNo) throws SQLException;
+
 //	void updateHit(int articleNo) throws SQLException;
 //	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
 

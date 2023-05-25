@@ -29,7 +29,7 @@
 		where reply_id = #{replyId}
 	</update>
 	
-	<delete id="deleteReply" parameterType="replyDto">
+	<delete id="deleteReply" parameterType="int">
 		delete from replies
 		where reply_id = #{replyId}
 	</delete>

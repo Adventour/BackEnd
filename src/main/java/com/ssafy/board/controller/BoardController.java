@@ -63,7 +63,7 @@ public class BoardController {
 
     @PostMapping("/list/{articleNo}")
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정 요청 API 입니다.")
-    public ResponseEntity<?> modify(@PathVariable("articleNo") String articleNo, @ModelAttribute BoardDto boardDto, @RequestParam("upfile") MultipartFile file)
+        public ResponseEntity<?> modify(@PathVariable("articleNo") String articleNo, @ModelAttribute BoardDto boardDto, @RequestParam("upfile") MultipartFile file)
             throws Exception {
         boardDto.setArticleNo(Integer.valueOf(articleNo));
         boardService.modifyArticle(boardDto, file);

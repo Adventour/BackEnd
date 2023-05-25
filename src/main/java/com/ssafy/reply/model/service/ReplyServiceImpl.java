@@ -28,7 +28,8 @@ public class ReplyServiceImpl implements ReplyService {
 		replyMapper.modifyReply(replyDto);
 	}
 
-	public void deleteReply(ReplyDto replyDto) throws SQLException {
-		replyMapper.deleteReply(replyDto);
+	@Override
+	public void deleteReply(int replyId) throws SQLException {
+		replyMapper.deleteReply(replyId);
 	}
 }

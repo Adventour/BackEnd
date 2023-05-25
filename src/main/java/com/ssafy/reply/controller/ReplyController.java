@@ -33,7 +33,6 @@ public class ReplyController {
 	@ApiOperation(value = "댓글 작성", notes = "댓글 작성 요청 API 입니다.")
 	public ResponseEntity<?> writeReply(@RequestBody ReplyDto replyDto)
 			throws Exception {
-		System.out.println("유저아이디~~~~~~~~~~~~~~~~"+ replyDto.getUserId());
 		replyService.writeReply(replyDto);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -52,11 +51,10 @@ public class ReplyController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/list/{articleNo}")
+	@DeleteMapping("/list/{replyId}")
 	@ApiOperation(value = "댓글 삭제", notes = "댓글 삭제 요청 API 입니다.")
-	public ResponseEntity<?> deleteReply(@RequestBody ReplyDto replyDto) throws Exception {
-		replyService.deleteReply(replyDto);
+	public ResponseEntity<?> deleteReply(@PathVariable("replyId") String replyId) throws Exception {
+		replyService.deleteReply(Integer.valueOf(replyId));
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
 }

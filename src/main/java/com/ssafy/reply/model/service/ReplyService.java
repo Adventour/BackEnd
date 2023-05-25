@@ -12,5 +12,5 @@ public interface ReplyService {
 
 	void modifyReply(ReplyDto replyDto) throws SQLException;
 
-	void deleteReply(ReplyDto replyDto) throws SQLException;
+	void deleteReply(int replyId) throws SQLException;
 }

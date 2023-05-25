@@ -24,7 +24,6 @@ public class BoardServiceImpl implements BoardService {
 	public void writeArticle(BoardDto boardDto, MultipartFile file) throws Exception {
 		if(file != null)
 			boardDto.setSaveFile(s3FileUploadService.upload(file));
-		System.out.println("SERVICE:::" + boardDto.getSaveFile());
 		boardMapper.writeArticle(boardDto);
 	}
 
@@ -36,14 +35,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	public BoardDto getArticle(int articleNo) throws SQLException {
+		boardMapper.updateHit(articleNo);
 		return boardMapper.getArticle(articleNo);
 	}
 
 	public void modifyArticle(BoardDto boardDto, MultipartFile file) throws Exception {
-		System.out.println(file.getOriginalFilename());
-		if (file != null)
+		if (!file.getOriginalFilename().equals(boardDto.getSaveFile()))
 			boardDto.setSaveFile(s3FileUploadService.upload(file));
-		System.out.println("파일 수정" + boardDto.getSaveFile());
 		boardMapper.modifyArticle(boardDto);
 	}
 
