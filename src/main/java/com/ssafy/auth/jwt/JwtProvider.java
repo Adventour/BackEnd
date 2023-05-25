@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
 public class JwtProvider {
 
     private final RedisService redisService;
-//    @Value()
-    private String JWT_SECRET = "SSAFY@Super#Secret!Key";
+    @Value("${JWT_SECRET_KEY}")
+    private String JWT_SECRET;
 
     private static final long JWT_EXPIRATION_MS = 1000L * 60 * 30 * 20; //30분
     private static final long REFRESH_TOKEN_EXPIRATION_MS = 1000L * 60 * 60 * 24 * 7; //7일

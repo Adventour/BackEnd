@@ -11,11 +11,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
-//    @Value("${REDIS_HOST}")
-    private String host = "adventour.vzwh4o.clustercfg.apn2.cache.amazonaws.com";
+    @Value("${REDIS_HOST}")
+    private String host;
 
-//    @Value("${REDIS_PORT}")
-    private int port = 6379;
+    @Value("${REDIS_PORT}")
+    private int port;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
