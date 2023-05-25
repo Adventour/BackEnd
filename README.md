@@ -1,6 +1,9 @@
 # EnjoyTrip_서울_17_김민석_오성락
 
 ---
+![](img/구성도.png)
+
+---
 ## DB ERD
 TODO : Follow Table ERD 변경 필요
 ![](img/DB_ERD.png)
