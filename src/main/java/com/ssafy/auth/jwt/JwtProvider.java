@@ -34,6 +34,7 @@ public class JwtProvider {
 
     private final RedisService redisService;
     @Value("${JWT_SECRET_KEY}")
+//    private String JWT_SECRET = "SSAFY@Super#Secret!Key";
     private String JWT_SECRET;
 
     private static final long JWT_EXPIRATION_MS = 1000L * 60 * 30 * 20; //30분

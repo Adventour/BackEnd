@@ -45,7 +45,6 @@ com\ssafy\member\model\mapper\MemberMapper.class
 com\ssafy\plan\model\service\PlanService.class
 com\ssafy\plan\controller\PlanController.class
 com\ssafy\attraction\model\service\AttractionService.class
-com\ssafy\board\model\dto\FileInfoDto.class
 com\ssafy\member\controller\MemberController.class
 com\ssafy\plan\model\mapper\PlanMapper.class
 com\ssafy\util\DBUtil.class
