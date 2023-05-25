@@ -12,7 +12,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
 //    @Value("${REDIS_HOST}")
-    private String host = "localhost";
+    private String host = "adventour.vzwh4o.clustercfg.apn2.cache.amazonaws.com";
 
 //    @Value("${REDIS_PORT}")
     private int port = 6379;
